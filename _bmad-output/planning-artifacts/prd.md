@@ -1,5 +1,5 @@
 ---
-stepsCompleted: ['step-01-init', 'step-02-discovery', 'step-03-success', 'step-04-journeys', 'step-05-domain', 'step-06-innovation', 'step-07-project-type', 'step-08-scoping']
+stepsCompleted: ['step-01-init', 'step-02-discovery', 'step-03-success', 'step-04-journeys', 'step-05-domain', 'step-06-innovation', 'step-07-project-type', 'step-08-scoping', 'step-09-functional', 'step-10-nonfunctional']
 inputDocuments: ['_bmad-output/analysis/brainstorming-session-2026-01-13.md']
 workflowType: 'prd'
 briefCount: 0
@@ -1445,3 +1445,255 @@ groundtruth's MVP focuses on delivering a polished, delightful user experience t
 - Challenge: Viral claim overwhelms infrastructure
 - Mitigation: Plan scalability from start (horizontal scaling, caching, CDN), use cloud auto-scaling
 - Fallback: Rate limiting, queue management, temporarily throttle new claim submissions if needed
+
+## Functional Requirements
+
+### User Management & Authentication
+
+- **FR1:** Users can register for an account using email address and phone number
+- **FR2:** Users must verify their email address via confirmation link
+- **FR3:** Users must verify their phone number via SMS code
+- **FR4:** System enforces one account per phone number
+- **FR5:** Users can log in with credentials to access authenticated features
+- **FR6:** Users can log out to end their session
+- **FR7:** Users can view and edit their profile information
+- **FR8:** Users can view other users' public profiles
+
+### Claims Management
+
+- **FR9:** Authenticated users can submit new claims for verification
+- **FR10:** Users can browse a list of claims with scores and filters
+- **FR11:** Users can search for claims by text
+- **FR12:** Users can view detailed information for any claim including transparency data
+- **FR13:** Users can view the score evolution history for a claim over time
+- **FR14:** System captures submission timestamp and submitter for each claim
+
+### Community Voting
+
+- **FR15:** Authenticated users can cast a vote on any claim (0-100 scale)
+- **FR16:** Users can optionally provide an explanation with their vote
+- **FR17:** Users can update their own vote on a claim
+- **FR18:** Users can retract their own vote on a claim
+- **FR19:** System records geographic origin (country) for each vote cast
+- **FR20:** System displays community vote aggregate score for each claim
+- **FR21:** System displays total count of community votes for each claim
+
+### Expert Verification System
+
+- **FR22:** Users can apply for expert verifier status by submitting credentials and domain expertise
+- **FR23:** Admins can review expert applications with provided credentials
+- **FR24:** Admins can approve expert applications and assign domain expertise tags
+- **FR25:** Admins can reject expert applications with reason
+- **FR26:** System designates approved users as expert verifiers with visible badge
+- **FR27:** Expert verifiers can cast expert votes on claims (0-100 scale with required explanation)
+- **FR28:** System displays expert vote aggregate score separately from community score
+- **FR29:** System displays total count of expert votes for each claim
+- **FR30:** System displays expert credentials and domain expertise on expert profiles
+- **FR31:** Individual expert votes and explanations are visible to all users
+
+### Weighted Scoring Algorithm
+
+- **FR32:** System calculates unified weighted truth score combining community and expert votes
+- **FR33:** System weights expert votes more heavily than community votes in unified score
+- **FR34:** System displays unified score (0-100) prominently on claim pages
+- **FR35:** System shows breakdown of community score vs expert score separately
+- **FR36:** System recalculates scores in real-time as new votes are cast
+
+### Geographic Transparency
+
+- **FR37:** System captures IP-based geolocation (country-level) for every vote cast
+- **FR38:** System stores geographic origin with each vote (preserving voter privacy)
+- **FR39:** System displays aggregate geographic distribution of votes by country for each claim
+- **FR40:** System visualizes geographic voting patterns using charts or maps
+- **FR41:** System shows separate geographic distributions for community vs expert votes
+- **FR42:** Geographic data is displayed at aggregate level only (no individual voter locations)
+
+### Evidence Management
+
+- **FR43:** Authenticated users can submit evidence for any claim (links, text, PDFs)
+- **FR44:** System attributes evidence to the submitter
+- **FR45:** Users can view all evidence submitted for a claim
+- **FR46:** Evidence is displayed on claim detail pages
+- **FR47:** Users can view which user submitted each piece of evidence
+
+### Platform Administration
+
+- **FR48:** Admins can view platform health metrics (user count, claim count, vote count)
+- **FR49:** Admins can access flagged content review queue
+- **FR50:** Admins can archive or remove claims identified as spam
+- **FR51:** Admins can suspend user accounts for violations
+- **FR52:** Admins can revoke expert status from verified experts
+
+### Content Moderation
+
+- **FR53:** Users can flag claims, evidence, or content as inappropriate
+- **FR54:** Flagged content appears in admin moderation queue for review
+- **FR55:** Admins can review flagged content and take action (remove, keep, warn)
+- **FR56:** System provides CAPTCHA challenges during registration and suspicious activity
+
+### Real-Time Updates
+
+- **FR57:** System updates vote counts in real-time as votes are cast
+- **FR58:** System updates scores in real-time as votes are cast
+- **FR59:** System updates geographic distribution visualizations in real-time as votes are cast
+- **FR60:** Users see live updates without manual page refresh
+
+### Search & Discovery
+
+- **FR61:** Users can filter claim lists by status (pending, verified, archived)
+- **FR62:** Users can sort claims by score, date submitted, or vote count
+- **FR63:** System provides search functionality across claim text
+
+### API & Integration (Internal MVP)
+
+- **FR64:** System provides RESTful API endpoints for all web app functionality
+- **FR65:** API enforces authentication via JWT tokens for protected endpoints
+- **FR66:** API implements rate limiting to prevent abuse
+- **FR67:** API returns standardized JSON responses with pagination where applicable
+
+### Privacy & Compliance
+
+- **FR68:** System displays privacy policy explaining data collection and usage
+- **FR69:** System displays terms of service defining user responsibilities
+- **FR70:** System allows users to export their voting history and contributions (GDPR/CCPA)
+- **FR71:** Individual voting history remains private; only aggregate data is public
+
+### User Experience & Accessibility
+
+- **FR72:** System provides mobile-responsive interface for all user actions
+- **FR73:** System supports modern browsers (Chrome, Firefox, Safari, Edge - last 2 versions)
+- **FR74:** Claim pages are server-side rendered for SEO indexability
+- **FR75:** System meets WCAG 2.1 Level AA accessibility standards
+
+## Non-Functional Requirements
+
+### Performance
+
+**Response Time:**
+- **NFR-P1:** API endpoints respond in under 200ms for 95th percentile of requests
+- **NFR-P2:** Claim detail pages load with First Contentful Paint (FCP) under 1.5 seconds
+- **NFR-P3:** Largest Contentful Paint (LCP) occurs within 2.5 seconds
+- **NFR-P4:** Time to Interactive (TTI) is under 3.5 seconds
+
+**Real-Time Performance:**
+- **NFR-P5:** Vote count updates appear to users within 500ms of vote submission
+- **NFR-P6:** Score recalculations complete and display within 500ms of triggering vote
+- **NFR-P7:** Geographic distribution visualizations update within 1 second of new vote data
+
+**Throughput:**
+- **NFR-P8:** System handles 100 concurrent users voting simultaneously without degradation
+- **NFR-P9:** System processes 1,000 votes per minute during peak traffic
+- **NFR-P10:** Search queries return results within 1 second for 95% of requests
+
+### Security
+
+**Data Protection:**
+- **NFR-S1:** All data transmitted over HTTPS/TLS 1.3 or higher
+- **NFR-S2:** User passwords hashed using bcrypt or Argon2 with appropriate cost factors
+- **NFR-S3:** Database contains no plaintext passwords or sensitive credentials
+- **NFR-S4:** Personal data (email, phone) encrypted at rest in database
+- **NFR-S5:** JWT access tokens expire within 60 minutes maximum
+- **NFR-S6:** JWT refresh tokens expire within 30 days maximum
+
+**Authentication & Authorization:**
+- **NFR-S7:** Session tokens stored in httpOnly cookies (XSS protection)
+- **NFR-S8:** CSRF tokens required for all state-changing operations
+- **NFR-S9:** API rate limiting prevents brute-force authentication attacks (max 5 failed attempts per 15 minutes)
+- **NFR-S10:** Phone verification required before voting privileges granted
+
+**Input Validation:**
+- **NFR-S11:** All user inputs sanitized to prevent SQL injection
+- **NFR-S12:** Content Security Policy (CSP) headers prevent XSS attacks
+- **NFR-S13:** File uploads (evidence PDFs) scanned for malware before storage
+- **NFR-S14:** Maximum file upload size enforced (10MB for evidence)
+
+**Privacy & Compliance:**
+- **NFR-S15:** Individual voting history never publicly exposed, only aggregates
+- **NFR-S16:** Geographic data stored at country-level only (no precise locations)
+- **NFR-S17:** Users can request deletion of personal data (GDPR right to be forgotten)
+- **NFR-S18:** Users can export their data in machine-readable format (GDPR data portability)
+- **NFR-S19:** Privacy policy and consent mechanisms comply with GDPR and CCPA
+
+### Scalability
+
+**User Growth:**
+- **NFR-SC1:** System architecture supports scaling from MVP (1,000 users) to 10,000 active users without code changes
+- **NFR-SC2:** Infrastructure plan documented for scaling to 100,000 users
+- **NFR-SC3:** Performance degradation under 10% when user load increases 10x
+
+**Data Growth:**
+- **NFR-SC4:** Database schema supports 1 million claims without performance degradation
+- **NFR-SC5:** Geographic data aggregation remains performant with 10 million+ votes
+
+**Viral Claim Handling:**
+- **NFR-SC6:** System handles single claim receiving 10,000+ votes in 1 hour without failure
+- **NFR-SC7:** Real-time updates continue functioning with 1,000+ concurrent viewers on single claim
+
+**Infrastructure:**
+- **NFR-SC8:** API servers horizontally scalable (add instances without downtime)
+- **NFR-SC9:** Database read replicas supported for query load distribution
+- **NFR-SC10:** Caching layer (Redis) reduces database load by 80% for frequent queries
+
+### Reliability & Availability
+
+**Uptime:**
+- **NFR-R1:** Platform achieves 99.8% uptime (maximum 87 minutes downtime per month)
+- **NFR-R2:** Planned maintenance windows communicated 48 hours in advance
+- **NFR-R3:** System degrades gracefully (read-only mode) rather than failing completely
+
+**Data Integrity:**
+- **NFR-R4:** No vote data loss even during system failures (transaction durability)
+- **NFR-R5:** Database backups performed daily with 30-day retention
+- **NFR-R6:** Point-in-time recovery possible for last 7 days of data
+
+**Error Handling:**
+- **NFR-R7:** System returns user-friendly error messages (no stack traces exposed)
+- **NFR-R8:** Failed votes automatically retried once before user notification
+- **NFR-R9:** System logs all errors for debugging without exposing sensitive data
+
+### Accessibility
+
+**WCAG Compliance:**
+- **NFR-A1:** All user interfaces meet WCAG 2.1 Level AA standards
+- **NFR-A2:** All interactive elements keyboard-navigable (no mouse required)
+- **NFR-A3:** Color contrast ratios meet WCAG AA requirements (4.5:1 for text)
+- **NFR-A4:** All images have alt text; decorative images marked as such
+
+**Screen Reader Support:**
+- **NFR-A5:** ARIA labels present on all dynamic content and controls
+- **NFR-A6:** Screen readers announce live updates (vote counts, scores)
+- **NFR-A7:** Form validation errors announced to screen readers
+
+**Responsive Design:**
+- **NFR-A8:** All functionality available on mobile devices (≥ 320px width)
+- **NFR-A9:** Touch targets minimum 44×44 pixels for mobile interaction
+- **NFR-A10:** Text remains readable without horizontal scrolling on mobile
+
+### Integration & Compatibility
+
+**Third-Party Services:**
+- **NFR-I1:** Geolocation service (MaxMind) failure does not prevent voting (degrades gracefully)
+- **NFR-I2:** SMS verification (Twilio) has fallback to email-only if service unavailable
+- **NFR-I3:** Email service failure queues messages for retry (no lost notifications)
+
+**Browser Compatibility:**
+- **NFR-I4:** Full functionality in Chrome, Firefox, Safari, Edge (last 2 versions)
+- **NFR-I5:** Graceful degradation for older browsers (basic functionality preserved)
+- **NFR-I6:** No dependency on browser plugins or extensions
+
+**API Integration:**
+- **NFR-I7:** Internal API versioning supports backward compatibility for 12 months
+- **NFR-I8:** API responses include version headers for client compatibility checks
+- **NFR-I9:** Breaking API changes require major version increment
+
+### Maintainability
+
+**Code Quality:**
+- **NFR-M1:** Code coverage minimum 70% for backend business logic
+- **NFR-M2:** All public API endpoints documented in OpenAPI 3.0 specification
+- **NFR-M3:** Security dependencies updated within 7 days of vulnerability disclosure
+
+**Monitoring & Observability:**
+- **NFR-M4:** Application logs structured (JSON) for automated analysis
+- **NFR-M5:** Error rates, response times, and uptime monitored in real-time
+- **NFR-M6:** Alerts triggered for performance degradation exceeding thresholds
