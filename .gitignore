@@ -1,0 +1,17 @@
+# Temp files
+tmpclaude-*
+NUL
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Dependencies (if applicable later)
+node_modules/
+venv/
+__pycache__/
+*.pyc
