@@ -10,8 +10,6 @@ jest.mock('argon2');
 
 describe('AuthService', () => {
   let service: AuthService;
-  let usersRepository: UsersRepository;
-  let emailVerificationService: EmailVerificationService;
 
   const mockUsersRepository = {
     findByEmail: jest.fn(),
@@ -42,10 +40,6 @@ describe('AuthService', () => {
     }).compile();
 
     service = module.get<AuthService>(AuthService);
-    usersRepository = module.get<UsersRepository>(UsersRepository);
-    emailVerificationService = module.get<EmailVerificationService>(
-      EmailVerificationService,
-    );
 
     jest.clearAllMocks();
   });

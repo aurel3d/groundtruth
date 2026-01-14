@@ -8,7 +8,16 @@
       "Bash(git commit:*)",
       "Bash(git push:*)",
       "WebSearch",
-      "Skill(bmad:bmm:workflows:generate-project-context)"
+      "Skill(bmad:bmm:workflows:generate-project-context)",
+      "Bash(pnpm install:*)",
+      "Bash(npm install:*)",
+      "Bash(pnpm approve-builds:*)",
+      "Bash(docker-compose up:*)",
+      "Bash(ls:*)",
+      "Bash(pnpm test:*)",
+      "Bash(pnpm build:*)",
+      "Bash(pnpm rebuild:*)",
+      "Bash(pnpm:*)"
     ]
   }
 }

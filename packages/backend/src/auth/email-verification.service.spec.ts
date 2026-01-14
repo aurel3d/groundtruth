@@ -1,13 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { EmailVerificationService } from './email-verification.service';
 import { EmailVerification } from './entities/email-verification.entity';
 
 describe('EmailVerificationService', () => {
   let service: EmailVerificationService;
-  let repository: Repository<EmailVerification>;
 
   const mockRepository = {
     create: jest.fn(),
@@ -18,7 +16,7 @@ describe('EmailVerificationService', () => {
   };
 
   const mockConfigService = {
-    get: jest.fn((key: string, defaultValue: string) => defaultValue),
+    get: jest.fn((_key: string, defaultValue: string) => defaultValue),
   };
 
   beforeEach(async () => {
@@ -37,9 +35,6 @@ describe('EmailVerificationService', () => {
     }).compile();
 
     service = module.get<EmailVerificationService>(EmailVerificationService);
-    repository = module.get<Repository<EmailVerification>>(
-      getRepositoryToken(EmailVerification),
-    );
 
     // Clear all mocks before each test
     jest.clearAllMocks();

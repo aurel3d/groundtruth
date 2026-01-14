@@ -11,41 +11,41 @@ import { VerificationStatus } from '@groundtruth/shared';
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id!: string;
 
   @Column({ unique: true })
   @Index('idx_users_email')
-  email: string;
+  email!: string;
 
   @Column({ name: 'email_verified', default: false })
-  emailVerified: boolean;
+  emailVerified!: boolean;
 
   @Column({ nullable: true, unique: true })
   @Index('idx_users_phone')
-  phone: string | null;
+  phone!: string | null;
 
   @Column({ name: 'phone_verified', default: false })
-  phoneVerified: boolean;
+  phoneVerified!: boolean;
 
   @Column({ name: 'password_hash', select: false })
-  passwordHash: string;
+  passwordHash!: string;
 
   @Column({
     name: 'verification_status',
     type: 'varchar',
     default: 'unverified',
   })
-  verificationStatus: VerificationStatus;
+  verificationStatus!: VerificationStatus;
 
   @Column({ name: 'is_expert', default: false })
-  isExpert: boolean;
+  isExpert!: boolean;
 
   @Column({ name: 'reputation_score', default: 0 })
-  reputationScore: number;
+  reputationScore!: number;
 
   @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
+  createdAt!: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
+  updatedAt!: Date;
 }

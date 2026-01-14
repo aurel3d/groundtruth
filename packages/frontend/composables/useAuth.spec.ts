@@ -1,17 +1,16 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { useAuth } from './useAuth';
 
-// Mock runtime config
-vi.mock('#app', () => ({
-  useRuntimeConfig: () => ({
-    public: {
-      apiBaseUrl: 'http://localhost:3001/api/v1',
-    },
-  }),
+// Mock Nuxt composables and $fetch before importing
+vi.stubGlobal('useRuntimeConfig', () => ({
+  public: {
+    apiBaseUrl: 'http://localhost:3001/api/v1',
+  },
 }));
 
-// Mock $fetch
-global.$fetch = vi.fn();
+vi.stubGlobal('$fetch', vi.fn());
+
+// Import after mocks are set up
+const { useAuth } = await import('./useAuth');
 
 describe('useAuth', () => {
   beforeEach(() => {
