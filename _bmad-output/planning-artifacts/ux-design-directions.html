@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>groundtruth - Design Direction Mockups</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f9fafb;
+            color: #111827;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1F3A93 0%, #2563eb 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.95;
+        }
+
+        .instructions {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 24px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #10B981;
+        }
+
+        .instructions h2 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: #1F3A93;
+        }
+
+        .instructions p {
+            line-height: 1.6;
+            color: #6B7280;
+        }
+
+        .mockup-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .mockup-section {
+            margin-bottom: 60px;
+        }
+
+        .mockup-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #1F3A93;
+        }
+
+        .mockup-description {
+            font-size: 14px;
+            color: #6B7280;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .mockup-frame {
+            background: white;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Direction 1: Minimalist Clean */
+        .direction-1 {
+            padding: 40px;
+        }
+
+        .direction-1 .score-card {
+            background: #f9fafb;
+            border: 2px solid #E5E7EB;
+            border-radius: 8px;
+            padding: 32px;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .direction-1 .verdict {
+            font-size: 48px;
+            font-weight: 700;
+            color: #10B981;
+            margin-bottom: 12px;
+        }
+
+        .direction-1 .score-number {
+            font-size: 40px;
+            font-weight: 700;
+            color: #1F3A93;
+            margin-bottom: 8px;
+        }
+
+        .direction-1 .score-label {
+            font-size: 14px;
+            color: #6B7280;
+            margin-bottom: 24px;
+        }
+
+        .direction-1 .breakdown {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #D1D5DB;
+        }
+
+        .direction-1 .breakdown-item {
+            text-align: center;
+        }
+
+        .direction-1 .breakdown-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1F3A93;
+            display: block;
+        }
+
+        .direction-1 .breakdown-label {
+            font-size: 12px;
+            color: #6B7280;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .direction-1 .tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 2px solid #E5E7EB;
+            margin-bottom: 24px;
+        }
+
+        .direction-1 .tab {
+            padding: 12px 24px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: #6B7280;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+        }
+
+        .direction-1 .tab.active {
+            color: #1F3A93;
+            border-bottom-color: #1F3A93;
+        }
+
+        .direction-1 .action-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .direction-1 .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .direction-1 .btn-primary {
+            background: #1F3A93;
+            color: white;
+        }
+
+        .direction-1 .btn-primary:hover {
+            background: #1a2d6f;
+        }
+
+        .direction-1 .btn-secondary {
+            background: #E5E7EB;
+            color: #1F3A93;
+        }
+
+        .direction-1 .btn-secondary:hover {
+            background: #D1D5DB;
+        }
+
+        /* Direction 2: Bold & Prominent */
+        .direction-2 {
+            padding: 40px;
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+        }
+
+        .direction-2 .score-showcase {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 32px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+        }
+
+        .direction-2 .score-badge {
+            display: inline-block;
+            background: #10B981;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 24px;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .direction-2 .large-score {
+            font-size: 64px;
+            font-weight: 700;
+            color: #1F3A93;
+            margin-bottom: 12px;
+            line-height: 1;
+        }
+
+        .direction-2 .score-context {
+            font-size: 16px;
+            color: #6B7280;
+            margin-bottom: 32px;
+        }
+
+        .direction-2 .score-breakdown {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .direction-2 .breakdown-card {
+            background: #f9fafb;
+            padding: 16px;
+            border-radius: 8px;
+            border-left: 4px solid #3B82F6;
+        }
+
+        .direction-2 .breakdown-card.community {
+            border-left-color: #10B981;
+        }
+
+        .direction-2 .breakdown-card h4 {
+            font-size: 12px;
+            font-weight: 700;
+            color: #6B7280;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .direction-2 .breakdown-card .number {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1F3A93;
+        }
+
+        .direction-2 .geo-section {
+            background: white;
+            padding: 24px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+        }
+
+        .direction-2 .geo-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1F3A93;
+            margin-bottom: 12px;
+        }
+
+        .direction-2 .heat-map-placeholder {
+            background: linear-gradient(90deg, #1F3A93 0%, #E5E7EB 50%, #F59E0B 100%);
+            height: 40px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+
+        .direction-2 .geo-text {
+            font-size: 13px;
+            color: #6B7280;
+        }
+
+        /* Direction 3: Data-Heavy Dense */
+        .direction-3 {
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 32px;
+        }
+
+        .direction-3 .sidebar {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            height: fit-content;
+        }
+
+        .direction-3 .sidebar h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1F3A93;
+            margin-bottom: 16px;
+        }
+
+        .direction-3 .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #E5E7EB;
+            font-size: 13px;
+        }
+
+        .direction-3 .stat-row:last-child {
+            border-bottom: none;
+        }
+
+        .direction-3 .stat-label {
+            color: #6B7280;
+        }
+
+        .direction-3 .stat-value {
+            color: #1F3A93;
+            font-weight: 600;
+        }
+
+        .direction-3 .main-content {
+            background: white;
+            border-radius: 8px;
+            padding: 32px;
+        }
+
+        .direction-3 .big-score {
+            font-size: 56px;
+            font-weight: 700;
+            color: #10B981;
+            margin-bottom: 24px;
+        }
+
+        .direction-3 .evidence-list {
+            margin-bottom: 24px;
+        }
+
+        .direction-3 .evidence-item {
+            padding: 16px;
+            background: #f9fafb;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            border-left: 3px solid #10B981;
+        }
+
+        .direction-3 .evidence-title {
+            font-weight: 600;
+            color: #1F3A93;
+            margin-bottom: 4px;
+        }
+
+        .direction-3 .evidence-meta {
+            color: #6B7280;
+            font-size: 12px;
+        }
+
+        /* Direction 4: Card-Based Modular */
+        .direction-4 {
+            padding: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .direction-4 .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid #E5E7EB;
+            transition: all 0.3s;
+        }
+
+        .direction-4 .card:hover {
+            border-color: #1F3A93;
+            box-shadow: 0 4px 12px rgba(31, 58, 147, 0.1);
+        }
+
+        .direction-4 .card-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #6B7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .direction-4 .card-content {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1F3A93;
+            margin-bottom: 16px;
+        }
+
+        .direction-4 .card-meta {
+            font-size: 13px;
+            color: #6B7280;
+        }
+
+        .direction-4 .score-card {
+            background: linear-gradient(135deg, #1F3A93 0%, #2563eb 100%);
+            color: white;
+            grid-column: span 2;
+        }
+
+        .direction-4 .score-card .card-title {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .direction-4 .score-card .card-content {
+            color: white;
+            font-size: 48px;
+        }
+
+        .direction-4 .score-card .card-meta {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Direction 5: Transparency-Focused Layered */
+        .direction-5 {
+            padding: 40px;
+        }
+
+        .direction-5 .transparency-stack {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .direction-5 .layer {
+            padding: 24px;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .direction-5 .layer:last-child {
+            border-bottom: none;
+        }
+
+        .direction-5 .layer.primary {
+            background: linear-gradient(135deg, #1F3A93 0%, #2563eb 100%);
+            color: white;
+            padding: 32px;
+        }
+
+        .direction-5 .verdict-display {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .direction-5 .verdict-icon {
+            font-size: 48px;
+        }
+
+        .direction-5 .verdict-info h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .direction-5 .verdict-info p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .direction-5 .layer.secondary h3 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1F3A93;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .direction-5 .layer.secondary {
+            background: #f9fafb;
+        }
+
+        .direction-5 .score-bars {
+            display: space-between;
+            gap: 16px;
+        }
+
+        .direction-5 .bar-item {
+            margin-bottom: 16px;
+        }
+
+        .direction-5 .bar-label {
+            font-size: 13px;
+            color: #6B7280;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .direction-5 .bar {
+            height: 8px;
+            background: #E5E7EB;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .direction-5 .bar-fill {
+            height: 100%;
+            background: #10B981;
+            border-radius: 4px;
+        }
+
+        .direction-5 .bar-fill.low {
+            width: 45%;
+            background: #F59E0B;
+        }
+
+        .direction-5 .bar-fill.high {
+            width: 78%;
+            background: #10B981;
+        }
+
+        /* Direction 6: Mobile-First Stacked */
+        .direction-6 {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .direction-6 .mobile-header {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .direction-6 .mobile-claim {
+            font-size: 14px;
+            color: #6B7280;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .direction-6 .mobile-score {
+            font-size: 48px;
+            font-weight: 700;
+            color: #10B981;
+            margin-bottom: 12px;
+        }
+
+        .direction-6 .mobile-label {
+            font-size: 13px;
+            color: #6B7280;
+        }
+
+        .direction-6 .mobile-card {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .direction-6 .mobile-card h4 {
+            font-size: 12px;
+            font-weight: 700;
+            color: #6B7280;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .direction-6 .mobile-card-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1F3A93;
+        }
+
+        .direction-6 .mobile-button {
+            width: 100%;
+            padding: 14px;
+            background: #1F3A93;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .direction-6 .mobile-button:hover {
+            background: #1a2d6f;
+        }
+
+        .comparison-grid {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px 40px;
+        }
+
+        .comparison-grid h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #1F3A93;
+        }
+
+        .criteria-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .criteria-table th {
+            background: #1F3A93;
+            color: white;
+            padding: 16px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .criteria-table td {
+            padding: 16px;
+            border-bottom: 1px solid #E5E7EB;
+            font-size: 14px;
+        }
+
+        .criteria-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .criteria-table td:first-child {
+            font-weight: 600;
+            color: #1F3A93;
+            background: #f9fafb;
+        }
+
+        .rating {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .rating.excellent {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .rating.good {
+            background: #DBEAFE;
+            color: #1E40AF;
+        }
+
+        .rating.fair {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .footer {
+            background: white;
+            padding: 40px 20px;
+            text-align: center;
+            color: #6B7280;
+            margin-top: 60px;
+            border-top: 1px solid #E5E7EB;
+        }
+
+        .footer p {
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .direction-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .direction-4 {
+                grid-template-columns: 1fr;
+            }
+
+            .direction-4 .score-card {
+                grid-column: span 1;
+            }
+
+            .direction-2 .score-breakdown {
+                grid-template-columns: 1fr;
+            }
+
+            .criteria-table {
+                font-size: 12px;
+            }
+
+            .criteria-table td, .criteria-table th {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎨 groundtruth Design Directions</h1>
+        <p>Six comprehensive visual approaches to radical transparency in fact-checking</p>
+    </div>
+
+    <div class="instructions">
+        <h2>How to Use This Mockup Showcase</h2>
+        <p>Below you'll find six complete design direction variations. Each explores a different visual philosophy while staying true to our core values: radical transparency, trust, and clarity. As you explore, consider which approach best supports our emotional goals and user experience. You can mix and match elements from different directions to create your ideal vision.</p>
+    </div>
+
+    <!-- Direction 1: Minimalist Clean -->
+    <div class="mockup-container">
+        <div class="mockup-section">
+            <div class="mockup-title">Direction 1: Minimalist Clean</div>
+            <div class="mockup-description">
+                <strong>Philosophy:</strong> Maximum clarity through minimal visual noise. Information hierarchy through space and typography, not decoration. Perfect for users who want instant clarity without distractions.
+            </div>
+            <div class="mockup-frame direction-1">
+                <div class="score-card">
+                    <div class="verdict">✓ TRUE</div>
+                    <div class="score-number">78</div>
+                    <div class="score-label">Global Consensus Score</div>
+                    <div class="breakdown">
+                        <div class="breakdown-item">
+                            <span class="breakdown-number">3,402</span>
+                            <span class="breakdown-label">Community Votes</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="breakdown-number">47</span>
+                            <span class="breakdown-label">Expert Votes</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="breakdown-number">18h ago</span>
+                            <span class="breakdown-label">Last Updated</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tabs">
+                    <button class="tab active">Evidence</button>
+                    <button class="tab">Expert Votes</button>
+                    <button class="tab">Discussion</button>
+                    <button class="tab">Methodology</button>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary">👍 Vote (0-100)</button>
+                    <button class="btn btn-secondary">📤 Share</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Direction 2: Bold & Prominent -->
+    <div class="mockup-container">
+        <div class="mockup-section">
+            <div class="mockup-title">Direction 2: Bold & Prominent</div>
+            <div class="mockup-description">
+                <strong>Philosophy:</strong> Large, impactful visuals that immediately communicate confidence. Multi-layered information with visual hierarchy through color and size. Best for users who want immediate visual impact.
+            </div>
+            <div class="mockup-frame direction-2">
+                <div class="score-showcase">
+                    <div class="score-badge">✓ VERIFIED TRUE</div>
+                    <div class="large-score">78/100</div>
+                    <div class="score-context">Strong global consensus with expert agreement</div>
+
+                    <div class="score-breakdown">
+                        <div class="breakdown-card">
+                            <h4>Community Score</h4>
+                            <div class="number">72</div>
+                        </div>
+                        <div class="breakdown-card community">
+                            <h4>Expert Score</h4>
+                            <div class="number">84</div>
+                        </div>
+                    </div>
+
+                    <div class="geo-section">
+                        <div class="geo-label">Global Distribution</div>
+                        <div class="heat-map-placeholder"></div>
+                        <div class="geo-text">78% agreement across regions • Minimal geographic disagreement</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Direction 3: Data-Heavy Dense -->
+    <div class="mockup-container">
+        <div class="mockup-section">
+            <div class="mockup-title">Direction 3: Data-Heavy Dense</div>
+            <div class="mockup-description">
+                <strong>Philosophy:</strong> Everything accessible at a glance with detailed side information. Great for researchers and investigators who want comprehensive data density. Perfect for power users and fact-checkers.
+            </div>
+            <div class="mockup-frame direction-3">
+                <div class="sidebar">
+                    <h3>Quick Stats</h3>
+                    <div class="stat-row">
+                        <span class="stat-label">Community Votes</span>
+                        <span class="stat-value">3,402</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Expert Votes</span>
+                        <span class="stat-value">47</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Evidence Pieces</span>
+                        <span class="stat-value">23</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Geographic Regions</span>
+                        <span class="stat-value">42</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Last Updated</span>
+                        <span class="stat-value">18h ago</span>
+                    </div>
+                </div>
+
+                <div class="main-content">
+                    <div class="big-score">78/100 ✓ TRUE</div>
+                    <h3 style="color: #1F3A93; margin-bottom: 16px; font-size: 16px;">Top Evidence</h3>
+                    <div class="evidence-list">
+                        <div class="evidence-item">
+                            <div class="evidence-title">Official Government Records</div>
+                            <div class="evidence-meta">Submitted by verified expert • 1,247 helpful votes</div>
+                        </div>
+                        <div class="evidence-item">
+                            <div class="evidence-title">Academic Research Study</div>
+                            <div class="evidence-meta">Peer-reviewed • 856 helpful votes</div>
+                        </div>
+                        <div class="evidence-item">
+                            <div class="evidence-title">News Archives</div>
+                            <div class="evidence-meta">Multiple sources • 623 helpful votes</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Direction 4: Card-Based Modular -->
+    <div class="mockup-container">
+        <div class="mockup-section">
+            <div class="mockup-title">Direction 4: Card-Based Modular</div>
+            <div class="mockup-description">
+                <strong>Philosophy:</strong> Modular card system that scales from mobile to desktop. Each piece of information is discoverable through interactive cards. Excellent for progressive disclosure and mobile-first design.
+            </div>
+            <div class="mockup-frame direction-4">
+                <div class="card score-card">
+                    <div class="card-title">Consensus Score</div>
+                    <div class="card-content">78</div>
+                    <div class="card-meta">✓ TRUE • 78% agreement</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Community</div>
+                    <div class="card-content">72</div>
+                    <div class="card-meta">3,402 votes • Average rating</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Expert</div>
+                    <div class="card-content">84</div>
+                    <div class="card-meta">47 votes • Weighted average</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Evidence</div>
+                    <div class="card-content">23</div>
+                    <div class="card-meta">Pieces submitted • Verified sources</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Geographic</div>
+                    <div class="card-content">42</div>
+                    <div class="card-meta">Regions • 78% consensus</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Last Updated</div>
+                    <div class="card-content">18h</div>
+                    <div class="card-meta">Ago • Real-time updates</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Direction 5: Transparency-Focused Layered -->
+    <div class="mockup-container">
+        <div class="mockup-section">
+            <div class="mockup-title">Direction 5: Transparency-Focused Layered</div>
+            <div class="mockup-description">
+                <strong>Philosophy:</strong> Progressive disclosure through layered sections that reveal information in natural order. Each layer builds understanding. Perfect for users who want to progressively deepen their understanding.
+            </div>
+            <div class="mockup-frame direction-5">
+                <div class="transparency-stack">
+                    <div class="layer primary">
+                        <div class="verdict-display">
+                            <div class="verdict-icon">✓</div>
+                            <div class="verdict-info">
+                                <h2>TRUE</h2>
+                                <p>Strong global consensus (78/100)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layer secondary">
+                        <h3>Score Breakdown</h3>
+                        <div class="score-bars">
+                            <div class="bar-item">
+                                <div class="bar-label">
+                                    <span>Community Votes (3,402)</span>
+                                    <span>72/100</span>
+                                </div>
+                                <div class="bar">
+                                    <div class="bar-fill high"></div>
+                                </div>
+                            </div>
+                            <div class="bar-item">
+                                <div class="bar-label">
+                                    <span>Expert Votes (47)</span>
+                                    <span>84/100</span>
+                                </div>
+                                <div class="bar">
+                                    <div class="bar-fill" style="width: 84%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layer secondary">
+                        <h3>Geographic Pattern</h3>
+                        <div style="height: 60px; background: linear-gradient(90deg, #1F3A93, #E5E7EB, #F59E0B); border-radius: 4px; margin: 12px 0;"></div>
+                        <p style="font-size: 13px; color: #6B7280;">78% global agreement • Minimal regional variance</p>
+                    </div>
+
+                    <div class="layer secondary">
+                        <h3>Expert Perspectives (23 Experts)</h3>
+                        <p style="font-size: 13px; color: #6B7280; margin-bottom: 12px;">Multiple domain experts reviewed this claim. Read their explanations below.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Direction 6: Mobile-First Stacked -->
+    <div class="mockup-container">
+        <div class="mockup-section">
+            <div class="mockup-title">Direction 6: Mobile-First Stacked</div>
+            <div class="mockup-description">
+                <strong>Philosophy:</strong> Optimized for mobile viewing first. Vertical stack that's easy to scroll. Perfect for users voting on-the-go while scrolling social media. Tappable everything.
+            </div>
+            <div class="mockup-frame direction-6">
+                <div class="mobile-header">
+                    <div class="mobile-claim">Is this claim true?</div>
+                    <div class="mobile-score">78</div>
+                    <div class="mobile-label">✓ Yes, with high confidence</div>
+                </div>
+
+                <div class="mobile-card">
+                    <h4>Community</h4>
+                    <div class="mobile-card-value">72</div>
+                </div>
+
+                <div class="mobile-card">
+                    <h4>Experts</h4>
+                    <div class="mobile-card-value">84</div>
+                </div>
+
+                <div class="mobile-card">
+                    <h4>Agreement</h4>
+                    <div class="mobile-card-value">78%</div>
+                </div>
+
+                <button class="mobile-button">📖 View Evidence</button>
+                <button class="mobile-button" style="background: #E5E7EB; color: #1F3A93;">👩‍⚖️ Expert Votes</button>
+                <button class="mobile-button" style="background: #E5E7EB; color: #1F3A93;">💬 Discussion</button>
+
+                <div style="text-align: center; margin-top: 16px;">
+                    <button class="mobile-button" style="background: #10B981; margin-bottom: 8px;">👍 Vote Yourself</button>
+                    <button class="mobile-button" style="background: #F59E0B;">📤 Share Link</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparison Table -->
+    <div class="comparison-grid">
+        <h2>Design Direction Comparison</h2>
+        <table class="criteria-table">
+            <thead>
+                <tr>
+                    <th>Criteria</th>
+                    <th>Direction 1</th>
+                    <th>Direction 2</th>
+                    <th>Direction 3</th>
+                    <th>Direction 4</th>
+                    <th>Direction 5</th>
+                    <th>Direction 6</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Instant Clarity</td>
+                    <td><span class="rating excellent">Excellent</span></td>
+                    <td><span class="rating excellent">Excellent</span></td>
+                    <td><span class="rating good">Good</span></td>
+                    <td><span class="rating excellent">Excellent</span></td>
+                    <td><span class="rating good">Good</span></td>
+                    <td><span class="rating excellent">Excellent</span></td>
+                </tr>
+                <tr>
+                    <td>Visual Distinctiveness</td>
+                    <td><span class="rating fair">Fair</span></td>
+                    <td><span class="rating excellent">Excellent</span></td>
+                    <td><span class="rating good">Good</span></td>
+                    <td><span class="rating excellent">Excellent</span></td>
+                    <td><span class="rating good">Good</span></td>
+                    <td><span class="rating good">Good</span></td>
+                </tr>
+                <tr>
+                    <td>Mobile Responsiveness</td>
+                    <td><span class="rating good">Good</span></td>
+                    <td><span class="rating good">Good</span></td>
+                    <td><span class="rating fair">Fair</span></td>
+                    <td><span class="rating excellent">Excellent</span></td>
+                    <td><span class="rating good">Good</span></td>
+                    <td><span class="rating excellent">Excellent</span></td>
+                </tr>
+                <tr>
+                    <td>Data Density</td>
+                    <td><span class="rating fair">Fair</span></td>
+                    <td><span class="rating fair">Fair</span></td>
+                    <td><span class="rating excellent">Excellent</span></td>
+                    <td><span class="rating good">Good</span></td>
+                    <td><span class="rating good">Good</span></td>
+                    <td><span class="rating fair">Fair</span></td>
+                </tr>
+                <tr>
+                    <td>Progressive Disclosure</td>
+                    <td><span class="rating good">Good</span></td>
+                    <td><span class="rating good">Good</span></td>
+                    <td><span class="rating fair">Fair</span></td>
+                    <td><span class="rating excellent">Excellent</span></td>
+                    <td><span class="rating excellent">Excellent</span></td>
+                    <td><span class="rating excellent">Excellent</span></td>
+                </tr>
+                <tr>
+                    <td>Transparency Feel</td>
+                    <td><span class="rating excellent">Excellent</span></td>
+                    <td><span class="rating excellent">Excellent</span></td>
+                    <td><span class="rating excellent">Excellent</span></td>
+                    <td><span class="rating good">Good</span></td>
+                    <td><span class="rating excellent">Excellent</span></td>
+                    <td><span class="rating good">Good</span></td>
+                </tr>
+                <tr>
+                    <td>Implementation Complexity</td>
+                    <td><span class="rating excellent">Simple</span></td>
+                    <td><span class="rating good">Moderate</span></td>
+                    <td><span class="rating good">Moderate</span></td>
+                    <td><span class="rating good">Moderate</span></td>
+                    <td><span class="rating good">Moderate</span></td>
+                    <td><span class="rating good">Moderate</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        <p><strong>Next Steps:</strong> Review these design directions and let me know which approach resonates most with you. You can also combine elements from multiple directions to create your ideal vision. Which direction best supports our core experience goal: "Paste claim → Instant multi-perspective clarity → Accessible reasoning"?</p>
+    </div>
+</body>
+</html>
