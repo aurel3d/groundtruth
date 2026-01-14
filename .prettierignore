@@ -1,0 +1,12 @@
+node_modules
+dist
+.next
+.nuxt
+coverage
+*.log
+.env
+.env.*
+!.env.example
+pnpm-lock.yaml
+_bmad
+_bmad-output

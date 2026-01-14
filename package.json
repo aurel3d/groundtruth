@@ -1,0 +1,40 @@
+{
+  "name": "groundtruth",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Community-driven platform for verifying claims through transparent expert consensus and democratic voting",
+  "author": "Aurel",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "scripts": {
+    "dev": "pnpm --parallel --filter \"./packages/*\" dev",
+    "dev:backend": "pnpm --filter backend start:dev",
+    "dev:frontend": "pnpm --filter frontend dev",
+    "build": "pnpm --recursive build",
+    "build:backend": "pnpm --filter backend build",
+    "build:frontend": "pnpm --filter frontend build",
+    "build:shared": "pnpm --filter shared build",
+    "test": "pnpm --recursive test",
+    "test:backend": "pnpm --filter backend test",
+    "test:frontend": "pnpm --filter frontend test",
+    "test:e2e": "pnpm --filter backend test:e2e && pnpm --filter frontend test:e2e",
+    "lint": "pnpm --recursive lint",
+    "format": "prettier --write \"packages/**/*.{ts,tsx,vue,json,md}\"",
+    "format:check": "prettier --check \"packages/**/*.{ts,tsx,vue,json,md}\"",
+    "clean": "pnpm --recursive exec rm -rf dist node_modules .turbo",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "migration:generate": "pnpm --filter backend migration:generate",
+    "migration:run": "pnpm --filter backend migration:run",
+    "migration:revert": "pnpm --filter backend migration:revert"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "prettier": "^3.1.0",
+    "typescript": "^5.3.3"
+  }
+}
