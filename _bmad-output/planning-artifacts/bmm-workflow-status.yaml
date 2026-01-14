@@ -36,7 +36,7 @@ workflow_status:
     workflows:
       - id: "brainstorm-project"
         name: "Brainstorming"
-        status: "optional"
+        status: "brainstorming-session-2026-01-13.md"
         agent: "analyst"
         command: "/bmad:core:workflows:brainstorming"
 
@@ -48,7 +48,7 @@ workflow_status:
 
       - id: "product-brief"
         name: "Product Brief"
-        status: "recommended"
+        status: "_bmad-output/planning-artifacts/product-brief-groundtruth-2026-01-13.md"
         agent: "analyst"
         command: "/bmad:bmm:workflows:create-product-brief"
 
