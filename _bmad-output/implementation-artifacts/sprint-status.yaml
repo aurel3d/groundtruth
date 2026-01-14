@@ -1,0 +1,148 @@
+# generated: 2026-01-14
+# project: groundtruth
+# tracking_system: file-system
+# story_location: C:\Users\aurel\sources\groundtruth\_bmad-output\implementation-artifacts
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+#
+# Epic Status Transitions:
+#   - backlog → in-progress: Automatically when first story is created (via create-story)
+#   - in-progress → done: Manually when all stories reach 'done' status
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created in stories folder
+#   - in-progress: Developer actively working on implementation
+#   - review: Ready for code review (via Dev's code-review workflow)
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epic transitions to 'in-progress' automatically when first story is created
+# - Stories can be worked in parallel if team capacity allows
+# - SM typically creates next story after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
+
+generated: 2026-01-14
+project: groundtruth
+tracking_system: file-system
+story_location: C:\Users\aurel\sources\groundtruth\_bmad-output\implementation-artifacts
+
+development_status:
+  # Epic 1: Foundation - User Authentication & Profiles
+  epic-1: in-progress
+  1-1-user-registration-with-email: ready-for-dev
+  1-2-user-registration-with-phone-number: backlog
+  1-3-password-creation-and-security: backlog
+  1-4-user-login: backlog
+  1-5-user-logout: backlog
+  1-6-view-and-edit-own-profile: backlog
+  1-7-view-public-profiles: backlog
+  1-8-session-management-with-jwt-tokens: backlog
+  epic-1-retrospective: optional
+
+  # Epic 2: Core - Claims Discovery & Community Voting
+  epic-2: backlog
+  2-1-submit-a-new-claim: backlog
+  2-2-browse-claims-with-pagination: backlog
+  2-3-search-claims-by-text: backlog
+  2-4-filter-and-sort-claims: backlog
+  2-5-view-claim-detail-page: backlog
+  2-6-view-claim-score-history: backlog
+  2-7-cast-a-community-vote: backlog
+  2-8-vote-with-optional-explanation: backlog
+  2-9-update-or-retract-my-vote: backlog
+  2-10-view-community-vote-distribution: backlog
+  2-11-geographic-vote-capture: backlog
+  epic-2-retrospective: optional
+
+  # Epic 3: Intelligence - Expert Verification System
+  epic-3: backlog
+  3-1-expert-application-submission: backlog
+  3-2-credential-verification-document-storage: backlog
+  3-3-admin-review-expert-applications: backlog
+  3-4-expert-domain-expertise-tagging: backlog
+  3-5-expert-profile-with-visible-badge: backlog
+  3-6-expert-vote-with-weighted-scale-and-explanation: backlog
+  3-7-expert-vote-aggregation-and-display: backlog
+  3-8-expert-votes-with-visible-explanations: backlog
+  3-9-expert-vote-transparency-and-accountability: backlog
+  3-10-expert-verification-badge-lifetime: backlog
+  epic-3-retrospective: optional
+
+  # Epic 4: Scoring & Transparency - Weighted Algorithm & Geographic Patterns
+  epic-4: backlog
+  4-1-unified-score-calculation-algorithm: backlog
+  4-2-weighted-score-display-on-claim-pages: backlog
+  4-3-score-breakdown-display: backlog
+  4-4-real-time-score-recalculation: backlog
+  4-5-geographic-data-capture-country-level-only: backlog
+  4-6-geographic-vote-aggregation: backlog
+  4-7-geographic-distribution-visualization: backlog
+  4-8-geographic-privacy-assurance: backlog
+  4-9-geographic-disagreement-highlighting: backlog
+  4-10-admin-geographic-viewing-for-moderation: backlog
+  4-11-user-filter-by-geographic-voting-patterns: backlog
+  epic-4-retrospective: optional
+
+  # Epic 5: Evidence & Credibility - Evidence Submission & Attribution
+  epic-5: backlog
+  5-1-submit-evidence-with-multiple-formats: backlog
+  5-2-evidence-attribution-and-transparency: backlog
+  5-3-evidence-format-support: backlog
+  5-4-evidence-credibility-flagging-by-experts: backlog
+  5-5-evidence-ranking-by-community-signals: backlog
+  epic-5-retrospective: optional
+
+  # Epic 6: Platform Health - Content Moderation & Administration
+  epic-6: backlog
+  6-1-community-flagging-of-problematic-content: backlog
+  6-2-moderation-queue-dashboard: backlog
+  6-3-moderator-actions-on-flagged-content: backlog
+  6-4-user-suspension-for-policy-violations: backlog
+  6-5-platform-health-metrics-dashboard: backlog
+  6-6-admin-moderation-queue-management: backlog
+  6-7-audit-logging-for-compliance: backlog
+  6-8-captcha-for-suspicious-voting-patterns: backlog
+  epic-6-retrospective: optional
+
+  # Epic 7: Real-Time Engagement - Live Updates & Consensus Visibility
+  epic-7: backlog
+  7-1-real-time-vote-count-updates: backlog
+  7-2-real-time-score-recalculation-and-display: backlog
+  7-3-real-time-geographic-distribution-updates: backlog
+  7-4-server-side-session-management-for-active-viewers: backlog
+  7-5-websocket-sse-infrastructure: backlog
+  epic-7-retrospective: optional
+
+  # Epic 8: Integration & API - External Platform Access
+  epic-8: backlog
+  8-1-restful-api-for-claim-operations: backlog
+  8-2-api-authentication-with-jwt: backlog
+  8-3-api-rate-limiting: backlog
+  8-4-api-pagination-support: backlog
+  8-5-comprehensive-api-documentation: backlog
+  epic-8-retrospective: optional
+
+  # Epic 9: Privacy, Compliance & Accessibility - Trust Foundation
+  epic-9: backlog
+  9-1-privacy-policy-with-transparency: backlog
+  9-2-privacy-protection-no-individual-vote-exposure: backlog
+  9-3-account-deletion-basic-implementation: backlog
+  9-4-mobile-responsive-design: backlog
+  9-5-modern-browser-support: backlog
+  9-6-server-side-rendering-for-seo: backlog
+  9-7-wcag-2-1-level-aa-compliance-keyboard-navigation: backlog
+  9-8-wcag-2-1-level-aa-compliance-screen-reader-support: backlog
+  9-9-color-contrast-and-visual-accessibility: backlog
+  9-10-accessibility-testing-and-compliance-verification: backlog
+  epic-9-retrospective: optional
