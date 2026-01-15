@@ -13,20 +13,20 @@ export class EmailVerification {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @Column({ name: 'user_id' })
+  @Column({ type: 'uuid', name: 'user_id' })
   userId!: string;
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'user_id' })
   user!: User;
 
-  @Column({ unique: true })
+  @Column({ type: 'varchar', unique: true })
   token!: string;
 
-  @Column({ name: 'expires_at' })
+  @Column({ type: 'timestamp', name: 'expires_at' })
   expiresAt!: Date;
 
-  @Column({ name: 'verified_at', nullable: true })
+  @Column({ type: 'timestamp', name: 'verified_at', nullable: true })
   verifiedAt!: Date | null;
 
   @CreateDateColumn({ name: 'created_at' })

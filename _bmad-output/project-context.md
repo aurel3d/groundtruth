@@ -133,8 +133,9 @@ _This file contains critical rules and patterns that AI agents must follow when 
   - Frontend: `tests/e2e/*.spec.ts` (Playwright)
 
 **Test Frameworks:**
-- Backend: Jest (unit, integration, E2E)
+- Backend: Vitest (unit, integration, E2E)
 - Frontend: Vitest (unit), Playwright (E2E)
+- Monorepo: Vitest workspace mode for unified test execution
 
 **Test Naming:**
 - Describe blocks: Feature or function name

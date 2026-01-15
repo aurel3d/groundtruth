@@ -13,21 +13,21 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @Column({ unique: true })
+  @Column({ type: 'varchar', unique: true })
   @Index('idx_users_email')
   email!: string;
 
-  @Column({ name: 'email_verified', default: false })
+  @Column({ type: 'boolean', name: 'email_verified', default: false })
   emailVerified!: boolean;
 
-  @Column({ nullable: true, unique: true })
+  @Column({ type: 'varchar', nullable: true, unique: true })
   @Index('idx_users_phone')
   phone!: string | null;
 
-  @Column({ name: 'phone_verified', default: false })
+  @Column({ type: 'boolean', name: 'phone_verified', default: false })
   phoneVerified!: boolean;
 
-  @Column({ name: 'password_hash', select: false })
+  @Column({ type: 'varchar', name: 'password_hash', select: false })
   passwordHash!: string;
 
   @Column({
@@ -37,10 +37,10 @@ export class User {
   })
   verificationStatus!: VerificationStatus;
 
-  @Column({ name: 'is_expert', default: false })
+  @Column({ type: 'boolean', name: 'is_expert', default: false })
   isExpert!: boolean;
 
-  @Column({ name: 'reputation_score', default: 0 })
+  @Column({ type: 'int', name: 'reputation_score', default: 0 })
   reputationScore!: number;
 
   @CreateDateColumn({ name: 'created_at' })

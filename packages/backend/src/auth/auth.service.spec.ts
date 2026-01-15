@@ -1,4 +1,5 @@
-import { jest, describe, it, expect, beforeEach } from '@jest/globals';
+import 'reflect-metadata';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConflictException, BadRequestException } from '@nestjs/common';
 import * as argon2 from 'argon2';
@@ -7,22 +8,22 @@ import { UsersRepository } from '../users/users.repository';
 import { EmailVerificationService } from './email-verification.service';
 import { ErrorCode } from '@groundtruth/shared';
 
-jest.mock('argon2');
+vi.mock('argon2');
 
 describe('AuthService', () => {
   let service: AuthService;
 
   const mockUsersRepository = {
-    findByEmail: jest.fn<any>(),
-    create: jest.fn<any>(),
-    update: jest.fn<any>(),
+    findByEmail: vi.fn(),
+    create: vi.fn(),
+    update: vi.fn(),
   };
 
   const mockEmailVerificationService = {
-    createVerificationToken: jest.fn<any>(),
-    sendVerificationEmail: jest.fn<any>(),
-    verifyToken: jest.fn<any>(),
-    markAsVerified: jest.fn<any>(),
+    createVerificationToken: vi.fn(),
+    sendVerificationEmail: vi.fn(),
+    verifyToken: vi.fn(),
+    markAsVerified: vi.fn(),
   };
 
   beforeEach(async () => {
@@ -42,7 +43,7 @@ describe('AuthService', () => {
 
     service = module.get<AuthService>(AuthService);
 
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should be defined', () => {
@@ -76,7 +77,7 @@ describe('AuthService', () => {
 
       mockUsersRepository.findByEmail.mockResolvedValue(null);
       mockUsersRepository.create.mockResolvedValue(mockUser);
-      (argon2.hash as jest.Mock<any>).mockResolvedValue('hashed-password');
+      (argon2.hash as any).mockResolvedValue('hashed-password');
       mockEmailVerificationService.createVerificationToken.mockResolvedValue(
         mockVerification,
       );
@@ -134,7 +135,7 @@ describe('AuthService', () => {
 
     it('should throw BadRequestException when user creation fails', async () => {
       mockUsersRepository.findByEmail.mockResolvedValue(null);
-      (argon2.hash as jest.Mock<any>).mockResolvedValue('hashed-password');
+      (argon2.hash as any).mockResolvedValue('hashed-password');
       mockUsersRepository.create.mockRejectedValue(new Error('Database error'));
 
       await expect(service.register(validRegistration)).rejects.toThrow(
@@ -158,7 +159,7 @@ describe('AuthService', () => {
 
       mockUsersRepository.findByEmail.mockResolvedValue(null);
       mockUsersRepository.create.mockResolvedValue(mockUser);
-      (argon2.hash as jest.Mock<any>).mockResolvedValue('hashed-password');
+      (argon2.hash as any).mockResolvedValue('hashed-password');
       mockEmailVerificationService.createVerificationToken.mockResolvedValue(
         mockVerification,
       );
@@ -177,7 +178,7 @@ describe('AuthService', () => {
 
   describe('verifyPassword', () => {
     it('should return true when password matches hash', async () => {
-      (argon2.verify as jest.Mock<any>).mockResolvedValue(true);
+      (argon2.verify as any).mockResolvedValue(true);
 
       const result = await service.verifyPassword('hash', 'password');
 
@@ -186,7 +187,7 @@ describe('AuthService', () => {
     });
 
     it('should return false when password does not match hash', async () => {
-      (argon2.verify as jest.Mock<any>).mockResolvedValue(false);
+      (argon2.verify as any).mockResolvedValue(false);
 
       const result = await service.verifyPassword('hash', 'wrong-password');
 
@@ -194,7 +195,7 @@ describe('AuthService', () => {
     });
 
     it('should return false when verification throws error', async () => {
-      (argon2.verify as jest.Mock<any>).mockRejectedValue(new Error('Invalid hash'));
+      (argon2.verify as any).mockRejectedValue(new Error('Invalid hash'));
 
       const result = await service.verifyPassword('invalid-hash', 'password');
 

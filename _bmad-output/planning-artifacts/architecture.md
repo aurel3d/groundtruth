@@ -322,7 +322,7 @@ npm install redis
 - NestJS application with TypeScript strict mode
 - Modular architecture with dependency injection
 - Express.js HTTP server (can swap to Fastify)
-- Testing setup with Jest
+- Testing setup with Vitest
 - Production-ready project structure
 - CLI for generating modules, controllers, services
 
@@ -364,10 +364,10 @@ npm install redis
 - Helmet.js for security headers
 
 **Testing Framework:**
-- Jest for unit and integration testing
+- Vitest for unit and integration testing
 - Supertest for E2E testing
-- Mocking and dependency injection for testability
-- Coverage reporting
+- Mocking with `vi.fn()`, `vi.mock()` (Vitest API)
+- Coverage reporting with v8 provider
 
 **Code Organization:**
 ```
@@ -444,7 +444,8 @@ These starters establish the following architectural foundation:
 
 **Testing Strategy:**
 - Frontend: Vitest (unit), Playwright (E2E)
-- Backend: Jest (unit, integration, E2E)
+- Backend: Vitest (unit, integration, E2E)
+- Monorepo: Vitest workspace mode for unified test execution
 - Shared type definitions for API contracts
 
 **Note:** Project initialization using these commands should be among the first implementation stories.
@@ -725,8 +726,9 @@ These starters establish the following architectural foundation:
 - **Pipeline Stages**:
   1. **Lint & Type Check**: ESLint, Prettier, TypeScript compilation (parallel: frontend + backend)
   2. **Test**:
-     - Backend: Jest unit tests + integration tests
+     - Backend: Vitest unit tests + integration tests
      - Frontend: Vitest unit tests
+     - Monorepo: Vitest workspace mode runs all tests
      - E2E: Playwright (only on PR to main, optional on develop)
   3. **Build**: Docker images
      - `groundtruth-frontend:latest` and `groundtruth-frontend:{git-sha}`
@@ -822,8 +824,9 @@ These starters establish the following architectural foundation:
     - pgBackRest backup configuration
 
 11. **Testing**:
-    - Jest tests (backend unit + integration)
+    - Vitest tests (backend unit + integration)
     - Vitest tests (frontend components)
+    - Vitest workspace mode (monorepo orchestration)
     - Playwright E2E tests
 
 **Cross-Component Dependencies:**

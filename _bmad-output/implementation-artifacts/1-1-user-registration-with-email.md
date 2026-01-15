@@ -249,12 +249,13 @@ packages/shared/src/
 
 ### Testing Requirements
 
-**Backend Testing (Jest):**
+**Backend Testing (Vitest):**
 - Unit tests co-located: `auth.service.spec.ts` next to `auth.service.ts`
 - Integration tests: `test/e2e/auth.e2e-spec.ts`
 - Mock external services (email, database in unit tests)
 - Use real database in integration tests (Docker test container)
 - Coverage target: 80% for new code
+- Mocking with `vi.fn()`, `vi.mock()` (Vitest API)
 
 **Frontend Testing (Vitest + Playwright):**
 - Component tests: `register.spec.ts` next to `register.vue`
@@ -298,7 +299,7 @@ None - implementation proceeded without blocking issues
 - Initialized complete monorepo structure with pnpm workspaces
 - Created backend (NestJS), frontend (Nuxt 3), and shared (TypeScript + Zod) packages
 - Set up Docker Compose for PostgreSQL and Redis
-- Configured testing infrastructure (Jest, Vitest, Playwright)
+- Configured testing infrastructure (Vitest workspace mode, Playwright)
 
 **Backend Implementation:**
 - Created database migration `001_users_table.sql` with users and email_verifications tables
@@ -353,8 +354,11 @@ None - implementation proceeded without blocking issues
 - packages/backend/src/app.module.ts
 - packages/backend/src/main.ts
 - packages/backend/test/e2e/auth.e2e-spec.ts
+- packages/backend/test/vitest-e2e.config.ts
+- packages/backend/src/test-setup.ts
 - packages/backend/package.json
 - packages/backend/tsconfig.json
+- packages/backend/vitest.config.ts
 - packages/backend/nest-cli.json
 - packages/backend/.eslintrc.js
 - packages/backend/.env.example
@@ -384,13 +388,14 @@ None - implementation proceeded without blocking issues
 - packages/shared/src/index.ts
 - packages/shared/package.json
 - packages/shared/tsconfig.json
-- packages/shared/jest.config.js
+- packages/shared/vitest.config.ts
 - packages/shared/.eslintrc.js
 
 **Root Files:**
 - package.json
 - pnpm-workspace.yaml
 - tsconfig.json
+- vitest.workspace.ts
 - docker-compose.yml
 - README.md
 - .prettierrc

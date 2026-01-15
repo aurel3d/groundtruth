@@ -17,7 +17,9 @@
       "Bash(pnpm test:*)",
       "Bash(pnpm build:*)",
       "Bash(pnpm rebuild:*)",
-      "Bash(pnpm:*)"
+      "Bash(pnpm:*)",
+      "Bash(psql:*)",
+      "Bash(PGPASSWORD=postgres psql:*)"
     ]
   }
 }

@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
 import { getRepositoryToken } from '@nestjs/typeorm';
@@ -8,15 +10,15 @@ describe('EmailVerificationService', () => {
   let service: EmailVerificationService;
 
   const mockRepository = {
-    create: jest.fn(),
-    save: jest.fn(),
-    findOne: jest.fn(),
-    update: jest.fn(),
-    createQueryBuilder: jest.fn(),
+    create: vi.fn(),
+    save: vi.fn(),
+    findOne: vi.fn(),
+    update: vi.fn(),
+    createQueryBuilder: vi.fn(),
   };
 
   const mockConfigService = {
-    get: jest.fn((_key: string, defaultValue: string) => defaultValue),
+    get: vi.fn((_key: string, defaultValue: string) => defaultValue),
   };
 
   beforeEach(async () => {
@@ -37,7 +39,7 @@ describe('EmailVerificationService', () => {
     service = module.get<EmailVerificationService>(EmailVerificationService);
 
     // Clear all mocks before each test
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should be defined', () => {
@@ -90,7 +92,7 @@ describe('EmailVerificationService', () => {
     it('should log verification link when email and token provided', async () => {
       const email = 'test@example.com';
       const token = 'test-token';
-      const loggerSpy = jest.spyOn(service['logger'], 'log');
+      const loggerSpy = vi.spyOn(service['logger'], 'log');
 
       await service.sendVerificationEmail(email, token);
 
@@ -178,10 +180,10 @@ describe('EmailVerificationService', () => {
   describe('deleteExpiredTokens', () => {
     it('should delete unverified expired tokens when called', async () => {
       const mockQueryBuilder = {
-        delete: jest.fn().mockReturnThis(),
-        where: jest.fn().mockReturnThis(),
-        andWhere: jest.fn().mockReturnThis(),
-        execute: jest.fn().mockResolvedValue({ affected: 5 }),
+        delete: vi.fn().mockReturnThis(),
+        where: vi.fn().mockReturnThis(),
+        andWhere: vi.fn().mockReturnThis(),
+        execute: vi.fn().mockResolvedValue({ affected: 5 }),
       };
 
       mockRepository.createQueryBuilder.mockReturnValue(mockQueryBuilder);
