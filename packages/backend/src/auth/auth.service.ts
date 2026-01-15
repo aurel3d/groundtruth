@@ -8,7 +8,6 @@ import * as argon2 from 'argon2';
 import { ErrorCode, Registration } from '@groundtruth/shared';
 import { UsersRepository } from '../users/users.repository';
 import { EmailVerificationService } from './email-verification.service';
-import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class AuthService {

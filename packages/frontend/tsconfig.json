@@ -1,27 +1,10 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "target": "ES2022",
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "types": ["@nuxt/types", "@nuxtjs/tailwindcss"],
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "jsx": "preserve",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "paths": {
-      "~/*": ["./*"],
-      "@/*": ["./*"]
-    }
-  },
-  "include": [
-    "**/*.ts",
-    "**/*.vue",
-    ".nuxt/nuxt.d.ts"
-  ],
-  "exclude": ["node_modules", ".nuxt", "dist"]
+  "extends": "./.nuxt/tsconfig.json",
+  "exclude": [
+    "node_modules",
+    ".nuxt",
+    "dist",
+    "**/*.spec.ts",
+    "**/*.test.ts"
+  ]
 }

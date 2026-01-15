@@ -71,13 +71,29 @@ pnpm docker:up
 
 This starts PostgreSQL and Redis containers.
 
-### 4. Run Database Migrations
+### 4. Create the Database
+
+Create the `groundtruth` database in PostgreSQL:
+
+```bash
+# Using psql with password from .env (default: postgres)
+PGPASSWORD=postgres psql -U postgres -h localhost -c "CREATE DATABASE groundtruth;"
+```
+
+Or connect to PostgreSQL and create it manually:
+
+```bash
+psql -U postgres -h localhost
+# Then run: CREATE DATABASE groundtruth;
+```
+
+### 5. Run Database Migrations
 
 ```bash
 pnpm migration:run
 ```
 
-### 5. Start Development Servers
+### 6. Start Development Servers
 
 ```bash
 # Start all services (backend + frontend)
