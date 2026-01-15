@@ -15,11 +15,11 @@
     }
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && tsc -p tsconfig.cjs.json && node scripts/post-build.cjs",
     "dev": "tsc --watch",
     "test": "vitest run --passWithNoTests",
     "lint": "eslint src --ext .ts",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist dist-cjs"
   },
   "dependencies": {
     "zod": "^3.22.4"
