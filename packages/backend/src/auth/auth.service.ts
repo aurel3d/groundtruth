@@ -3,6 +3,7 @@ import {
   ConflictException,
   BadRequestException,
   Logger,
+  Inject,
 } from '@nestjs/common';
 import * as argon2 from 'argon2';
 import { ErrorCode, Registration } from '@groundtruth/shared';
@@ -14,7 +15,9 @@ export class AuthService {
   private readonly logger = new Logger(AuthService.name);
 
   constructor(
+    @Inject(UsersRepository)
     private readonly usersRepository: UsersRepository,
+    @Inject(EmailVerificationService)
     private readonly emailVerificationService: EmailVerificationService,
   ) {}
 
