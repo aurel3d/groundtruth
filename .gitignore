@@ -9,6 +9,7 @@ Thumbs.db
 # IDE files
 .vscode/
 .idea/
+.claude/settings.local.json
 
 # Dependencies
 node_modules/
@@ -18,10 +19,12 @@ __pycache__/
 
 # Build outputs
 dist/
+dist-cjs/
 .next/
 .nuxt/
 .output/
 build/
+*.tsbuildinfo
 
 # Environment files
 .env
