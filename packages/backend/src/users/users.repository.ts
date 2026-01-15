@@ -20,6 +20,15 @@ export class UsersRepository {
   }
 
   /**
+   * Find a user by their phone number
+   * @param phone - The phone number to search for (E.164 format, e.g., "+33612345678")
+   * @returns The user if found, null otherwise
+   */
+  async findByPhone(phone: string): Promise<User | null> {
+    return this.repository.findOne({ where: { phone } });
+  }
+
+  /**
    * Find a user by their unique ID
    * @param id - The user ID to search for
    * @returns The user if found, null otherwise
@@ -74,6 +83,21 @@ export class UsersRepository {
    */
   async update(id: string, userData: Partial<User>): Promise<User | null> {
     await this.repository.update(id, userData);
+    return this.findById(id);
+  }
+
+  /**
+   * Mark a user's phone number as verified and update verification status
+   * @param id - The ID of the user to update
+   * @param phone - The verified phone number (E.164 format)
+   * @returns The updated user if found, null otherwise
+   */
+  async updatePhoneVerified(id: string, phone: string): Promise<User | null> {
+    await this.repository.update(id, {
+      phone,
+      phoneVerified: true,
+      verificationStatus: 'phone_verified',
+    });
     return this.findById(id);
   }
 

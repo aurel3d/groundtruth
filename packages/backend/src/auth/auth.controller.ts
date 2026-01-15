@@ -1,7 +1,15 @@
 import { Controller, Post, Get, Body, Query, HttpCode, HttpStatus, UsePipes } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiQuery } from '@nestjs/swagger';
 import { Throttle } from '@nestjs/throttler';
-import { RegistrationSchema, Registration, EmailVerificationSchema } from '@groundtruth/shared';
+import {
+  RegistrationSchema,
+  Registration,
+  EmailVerificationSchema,
+  PhoneNumberSchema,
+  VerifySmsCodeSchema,
+  SendSmsCodeDto,
+  VerifyPhoneDto,
+} from '@groundtruth/shared';
 import { ZodValidationPipe } from '../common/pipes/zod-validation.pipe';
 import { AuthService } from './auth.service';
 
@@ -182,5 +190,138 @@ export class AuthController {
     @Body() body: { email: string },
   ): Promise<{ message: string }> {
     return this.authService.resendVerificationEmail(body.email);
+  }
+
+  @Post('send-sms-code')
+  @HttpCode(HttpStatus.OK)
+  @Throttle({ default: { limit: 5, ttl: 900000 } }) // 5 attempts per 15 minutes (NFR-S9)
+  @UsePipes(new ZodValidationPipe(PhoneNumberSchema))
+  @ApiOperation({ summary: 'Send SMS verification code to phone number' })
+  @ApiResponse({
+    status: 200,
+    description: 'SMS code sent successfully',
+    schema: {
+      type: 'object',
+      properties: {
+        message: {
+          type: 'string',
+          example: 'SMS verification code sent',
+        },
+      },
+    },
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Invalid phone format or SMS send failed',
+    schema: {
+      type: 'object',
+      properties: {
+        error: {
+          type: 'object',
+          properties: {
+            code: { type: 'string', example: 'INVALID_PHONE_FORMAT' },
+            message: {
+              type: 'string',
+              example: 'Invalid phone number format',
+            },
+            timestamp: { type: 'string', format: 'date-time' },
+            requestId: { type: 'string' },
+          },
+        },
+      },
+    },
+  })
+  @ApiResponse({
+    status: 409,
+    description: 'Phone number already exists',
+    schema: {
+      type: 'object',
+      properties: {
+        error: {
+          type: 'object',
+          properties: {
+            code: { type: 'string', example: 'PHONE_ALREADY_EXISTS' },
+            message: {
+              type: 'string',
+              example: 'This phone number is already registered',
+            },
+            details: { type: 'object', properties: { phone: { type: 'string' } } },
+            timestamp: { type: 'string', format: 'date-time' },
+            requestId: { type: 'string' },
+          },
+        },
+      },
+    },
+  })
+  @ApiResponse({
+    status: 429,
+    description: 'Rate limit exceeded',
+    schema: {
+      type: 'object',
+      properties: {
+        error: {
+          type: 'object',
+          properties: {
+            code: { type: 'string', example: 'PHONE_VERIFICATION_RATE_LIMIT_EXCEEDED' },
+            message: {
+              type: 'string',
+              example: 'Too many attempts. Please try again later.',
+            },
+            timestamp: { type: 'string', format: 'date-time' },
+            requestId: { type: 'string' },
+          },
+        },
+      },
+    },
+  })
+  async sendSmsCode(
+    @Body() body: SendSmsCodeDto & { userId: string },
+  ): Promise<{ message: string }> {
+    return this.authService.sendSmsCode(body.userId, body.phone);
+  }
+
+  @Post('verify-phone')
+  @HttpCode(HttpStatus.OK)
+  @Throttle({ default: { limit: 5, ttl: 900000 } }) // 5 attempts per 15 minutes
+  @UsePipes(new ZodValidationPipe(VerifySmsCodeSchema))
+  @ApiOperation({ summary: 'Verify phone number with SMS code' })
+  @ApiResponse({
+    status: 200,
+    description: 'Phone verified successfully',
+    schema: {
+      type: 'object',
+      properties: {
+        message: {
+          type: 'string',
+          example: 'Phone number verified successfully',
+        },
+      },
+    },
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Invalid or expired code',
+    schema: {
+      type: 'object',
+      properties: {
+        error: {
+          type: 'object',
+          properties: {
+            code: { type: 'string', example: 'SMS_CODE_INVALID' },
+            message: {
+              type: 'string',
+              example: 'Invalid or expired verification code',
+            },
+            timestamp: { type: 'string', format: 'date-time' },
+            requestId: { type: 'string' },
+          },
+        },
+      },
+    },
+  })
+  async verifyPhone(
+    @Body() body: VerifyPhoneDto & { userId: string },
+  ): Promise<{ message: string }> {
+    return this.authService.verifyPhone(body.userId, body.phone, body.code);
   }
 }

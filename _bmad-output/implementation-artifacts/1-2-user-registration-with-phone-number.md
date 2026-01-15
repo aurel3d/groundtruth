@@ -40,32 +40,32 @@ so that I can enable phone-based security and voting access.
 ## Tasks / Subtasks
 
 ### Backend Tasks
-- [ ] Create phone verification entity and migration (AC: Scenario 1)
-  - [ ] Create `phone-verification.entity.ts` following email-verification pattern
-  - [ ] Create migration `002_phone_verifications_table.sql` for token storage table
-  - [ ] Add indexes for phone number and expiry lookups
+- [x] Create phone verification entity and migration (AC: Scenario 1)
+  - [x] Create `phone-verification.entity.ts` following email-verification pattern
+  - [x] Create migration `002_phone_verifications_table.sql` for token storage table
+  - [x] Add indexes for phone number and expiry lookups
 
-- [ ] Create PhoneVerificationService (AC: Scenario 1, 2)
-  - [ ] Generate 6-digit numeric SMS codes with 10-minute expiry
-  - [ ] Implement SMS sending via Twilio Verify API
-  - [ ] Implement code verification logic with rate limiting
-  - [ ] Mock SMS in development (log codes to console like email service)
-  - [ ] Unit tests with mocked Twilio client
+- [x] Create PhoneVerificationService (AC: Scenario 1, 2)
+  - [x] Generate 6-digit numeric SMS codes with 10-minute expiry
+  - [x] Implement SMS sending via Twilio Verify API
+  - [x] Implement code verification logic with rate limiting
+  - [x] Mock SMS in development (log codes to console like email service)
+  - [x] Unit tests with mocked Twilio client
 
-- [ ] Add phone verification endpoints to AuthController (AC: Scenario 1, 2)
-  - [ ] `POST /api/v1/auth/send-sms-code` - Send verification SMS
-  - [ ] `POST /api/v1/auth/verify-phone` - Verify SMS code
-  - [ ] Apply ThrottlerGuard (5 attempts per 15 min)
-  - [ ] Add Swagger documentation
+- [x] Add phone verification endpoints to AuthController (AC: Scenario 1, 2)
+  - [x] `POST /api/v1/auth/send-sms-code` - Send verification SMS
+  - [x] `POST /api/v1/auth/verify-phone` - Verify SMS code
+  - [x] Apply ThrottlerGuard (5 attempts per 15 min)
+  - [x] Add Swagger documentation
 
-- [ ] Update AuthService with phone verification flow (AC: Scenario 2)
-  - [ ] Check phone uniqueness before sending SMS
-  - [ ] Update user `phoneVerified` and `verificationStatus` after successful verification
-  - [ ] Handle phone already exists error
+- [x] Update AuthService with phone verification flow (AC: Scenario 2)
+  - [x] Check phone uniqueness before sending SMS
+  - [x] Update user `phoneVerified` and `verificationStatus` after successful verification
+  - [x] Handle phone already exists error
 
-- [ ] Update UsersRepository with phone queries (AC: Scenario 1)
-  - [ ] findByPhone method with JSDoc
-  - [ ] updatePhoneVerified method
+- [x] Update UsersRepository with phone queries (AC: Scenario 1)
+  - [x] findByPhone method with JSDoc
+  - [x] updatePhoneVerified method
 
 - [ ] Write E2E tests for phone verification flow (AC: Scenario 1, 2)
   - [ ] Test successful flow: send SMS → verify code → phone_verified = true
@@ -76,18 +76,18 @@ so that I can enable phone-based security and voting access.
   - [ ] Test rate limiting (6th attempt blocked)
 
 ### Shared Package Tasks
-- [ ] Create PhoneVerificationSchema in user.schema.ts (AC: Scenario 1)
-  - [ ] PhoneNumberSchema with libphonenumber-js validation
-  - [ ] VerifySmsCodeSchema with 6-digit numeric validation
-  - [ ] Export TypeScript types: `SendSmsCodeDto`, `VerifyPhoneDto`
+- [x] Create PhoneVerificationSchema in user.schema.ts (AC: Scenario 1)
+  - [x] PhoneNumberSchema with libphonenumber-js validation
+  - [x] VerifySmsCodeSchema with 6-digit numeric validation
+  - [x] Export TypeScript types: `SendSmsCodeDto`, `VerifyPhoneDto`
 
-- [ ] Add phone error codes to error-codes.ts (AC: Scenario 1, 2)
-  - [ ] PHONE_ALREADY_EXISTS
-  - [ ] INVALID_PHONE_FORMAT
-  - [ ] SMS_CODE_EXPIRED
-  - [ ] SMS_CODE_INVALID
-  - [ ] SMS_SEND_FAILED
-  - [ ] PHONE_VERIFICATION_RATE_LIMIT_EXCEEDED
+- [x] Add phone error codes to error-codes.ts (AC: Scenario 1, 2)
+  - [x] PHONE_ALREADY_EXISTS
+  - [x] INVALID_PHONE_FORMAT
+  - [x] SMS_CODE_EXPIRED
+  - [x] SMS_CODE_INVALID
+  - [x] SMS_SEND_FAILED
+  - [x] PHONE_VERIFICATION_RATE_LIMIT_EXCEEDED
 
 ### Frontend Tasks
 - [ ] Replace phone-setup.vue placeholder with full implementation (AC: Scenario 1, 2)
@@ -359,16 +359,71 @@ async function sendCode() {
 
 ### Agent Model Used
 
-_To be completed by dev agent_
+Claude Sonnet 4.5 (claude-sonnet-4-5-20250929)
 
 ### Debug Log References
 
-_To be completed by dev agent_
+N/A - Implementation completed without critical blocking issues
 
 ### Completion Notes List
 
-_To be completed by dev agent_
+**Backend Implementation (Complete ✓)**
+- ✅ Created PhoneVerification entity with TypeORM following email verification pattern
+- ✅ Created migration 002_phone_verifications_table.sql with proper indexes
+- ✅ Implemented PhoneVerificationService with:
+  - 6-digit SMS code generation
+  - SHA-256 code hashing for secure storage
+  - 10-minute code expiry
+  - Twilio SMS integration (with development mode console logging)
+  - 15 comprehensive unit tests (all passing)
+- ✅ Added phone verification endpoints to AuthController:
+  - POST /auth/send-sms-code (with ThrottlerGuard: 5 attempts per 15 min)
+  - POST /auth/verify-phone (with ThrottlerGuard: 5 attempts per 15 min)
+  - Complete Swagger/OpenAPI documentation
+- ✅ Updated AuthService with sendSmsCode() and verifyPhone() methods
+- ✅ Extended UsersRepository with findByPhone() and updatePhoneVerified() methods
+- ✅ Registered PhoneVerification entity and PhoneVerificationService in AuthModule
+
+**Shared Package Implementation (Complete ✓)**
+- ✅ Created PhoneNumberSchema with libphonenumber-js validation and E.164 formatting
+- ✅ Created VerifySmsCodeSchema with 6-digit numeric validation
+- ✅ Added phone error codes: SMS_CODE_EXPIRED, SMS_CODE_INVALID, SMS_SEND_FAILED, PHONE_VERIFICATION_RATE_LIMIT_EXCEEDED
+- ✅ Installed libphonenumber-js dependency
+- ✅ Built shared package successfully
+
+**Dependencies Installed:**
+- twilio@5.11.2 (backend)
+- libphonenumber-js@1.12.34 (shared)
+
+**Test Results:**
+- All 37 backend unit tests passing ✓
+- PhoneVerificationService: 15/15 tests passing
+- EmailVerificationService: 11/11 tests passing
+- AuthService: 11/11 tests passing (with PhoneVerificationService mock)
+
+**Remaining Work (Frontend):**
+- [ ] E2E tests for phone verification flow
+- [ ] Implement phone-setup.vue frontend component
+- [ ] Update useAuth.ts composable with phone methods
+- [ ] Write frontend E2E tests for phone setup UI
 
 ### File List
 
-_To be completed by dev agent_
+**Backend - New Files:**
+- packages/backend/src/auth/entities/phone-verification.entity.ts
+- packages/backend/src/auth/phone-verification.service.ts
+- packages/backend/src/auth/phone-verification.service.spec.ts
+- packages/backend/src/migrations/002_phone_verifications_table.sql
+
+**Backend - Modified Files:**
+- packages/backend/src/auth/auth.module.ts
+- packages/backend/src/auth/auth.service.ts
+- packages/backend/src/auth/auth.service.spec.ts
+- packages/backend/src/auth/auth.controller.ts
+- packages/backend/src/users/users.repository.ts
+- packages/backend/package.json
+
+**Shared - Modified Files:**
+- packages/shared/src/schemas/user.schema.ts
+- packages/shared/src/constants/error-codes.ts
+- packages/shared/package.json

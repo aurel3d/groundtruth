@@ -6,6 +6,7 @@ import * as argon2 from 'argon2';
 import { AuthService } from './auth.service';
 import { UsersRepository } from '../users/users.repository';
 import { EmailVerificationService } from './email-verification.service';
+import { PhoneVerificationService } from './phone-verification.service';
 import { ErrorCode } from '@groundtruth/shared';
 
 vi.mock('argon2');
@@ -26,6 +27,13 @@ describe('AuthService', () => {
     markAsVerified: vi.fn(),
   };
 
+  const mockPhoneVerificationService = {
+    createVerificationCode: vi.fn(),
+    sendSmsCode: vi.fn(),
+    verifyCode: vi.fn(),
+    markAsVerified: vi.fn(),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -37,6 +45,10 @@ describe('AuthService', () => {
         {
           provide: EmailVerificationService,
           useValue: mockEmailVerificationService,
+        },
+        {
+          provide: PhoneVerificationService,
+          useValue: mockPhoneVerificationService,
         },
       ],
     }).compile();

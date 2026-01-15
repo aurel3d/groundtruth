@@ -10,6 +10,7 @@ import * as argon2 from 'argon2';
 import { ErrorCode, Registration } from '@groundtruth/shared';
 import { UsersRepository } from '../users/users.repository';
 import { EmailVerificationService } from './email-verification.service';
+import { PhoneVerificationService } from './phone-verification.service';
 
 @Injectable()
 export class AuthService {
@@ -20,6 +21,8 @@ export class AuthService {
     private readonly usersRepository: UsersRepository,
     @Inject(EmailVerificationService)
     private readonly emailVerificationService: EmailVerificationService,
+    @Inject(PhoneVerificationService)
+    private readonly phoneVerificationService: PhoneVerificationService,
   ) {}
 
   /**
@@ -175,6 +178,106 @@ export class AuthService {
 
     return {
       message: 'Verification email sent. Check your inbox.',
+    };
+  }
+
+  /**
+   * Send SMS verification code to phone number
+   * - Validates phone format and uniqueness
+   * - Generates 6-digit verification code
+   * - Sends SMS code to phone number
+   */
+  async sendSmsCode(
+    userId: string,
+    phone: string,
+  ): Promise<{ message: string }> {
+    // Check if user exists
+    const user = await this.usersRepository.findById(userId);
+    if (!user) {
+      throw new NotFoundException({
+        code: ErrorCode.USER_NOT_FOUND,
+        message: 'User not found',
+        details: { userId },
+      });
+    }
+
+    // Check if phone number is already registered to another user
+    const existingUser = await this.usersRepository.findByPhone(phone);
+    if (existingUser && existingUser.id !== userId) {
+      throw new ConflictException({
+        code: ErrorCode.PHONE_ALREADY_EXISTS,
+        message: 'This phone number is already registered',
+        details: { phone },
+      });
+    }
+
+    try {
+      // Create verification code record (returns plain code for SMS sending)
+      const verification =
+        await this.phoneVerificationService.createVerificationCode(
+          userId,
+          phone,
+        );
+
+      // Send SMS code (async, don't block response)
+      this.phoneVerificationService
+        .sendSmsCode(phone, verification.code)
+        .catch((error: Error) => {
+          this.logger.error(`Failed to send SMS code: ${error.message}`);
+        });
+
+      return {
+        message: 'SMS verification code sent',
+      };
+    } catch (error) {
+      this.logger.error(`Send SMS code failed: ${(error as Error).message}`);
+      throw new BadRequestException({
+        code: ErrorCode.SMS_SEND_FAILED,
+        message: 'Failed to send SMS verification code',
+      });
+    }
+  }
+
+  /**
+   * Verify phone number with SMS code
+   * - Validates code exists and not expired
+   * - Marks phone as verified
+   * - Updates user verification status
+   */
+  async verifyPhone(
+    userId: string,
+    phone: string,
+    code: string,
+  ): Promise<{ message: string }> {
+    // Verify the SMS code
+    const verification = await this.phoneVerificationService.verifyCode(
+      phone,
+      code,
+    );
+
+    if (!verification) {
+      throw new BadRequestException({
+        code: ErrorCode.SMS_CODE_INVALID,
+        message: 'Invalid or expired verification code',
+      });
+    }
+
+    // Verify the code belongs to the correct user
+    if (verification.userId !== userId) {
+      throw new BadRequestException({
+        code: ErrorCode.SMS_CODE_INVALID,
+        message: 'Verification code does not match user',
+      });
+    }
+
+    // Mark phone as verified in users table
+    await this.usersRepository.updatePhoneVerified(userId, phone);
+
+    // Mark verification as complete
+    await this.phoneVerificationService.markAsVerified(verification.id);
+
+    return {
+      message: 'Phone number verified successfully',
     };
   }
 }
