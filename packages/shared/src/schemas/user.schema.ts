@@ -59,8 +59,10 @@ export type PhoneSetup = z.infer<typeof PhoneSetupSchema>;
 /**
  * Phone number validation schema for SMS code sending
  * Uses libphonenumber-js for validation
+ * Includes userId for authenticated phone verification during registration
  */
 export const PhoneNumberSchema = z.object({
+  userId: z.string().uuid({ message: 'Invalid user ID format' }),
   phone: z
     .string()
     .refine(
@@ -95,8 +97,10 @@ export type SendSmsCodeDto = z.infer<typeof PhoneNumberSchema>;
 /**
  * SMS verification code validation schema
  * Validates 6-digit numeric codes
+ * Includes userId for authenticated phone verification during registration
  */
 export const VerifySmsCodeSchema = z.object({
+  userId: z.string().uuid({ message: 'Invalid user ID format' }),
   phone: z
     .string()
     .regex(/^\+[1-9]\d{1,14}$/, {

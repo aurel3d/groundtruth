@@ -111,9 +111,9 @@ export class AuthService {
    * Verify email using token
    * - Validates token exists and not expired
    * - Marks email as verified
-   * - Returns redirect URL to phone setup page
+   * - Returns redirect URL to phone setup page and userId for phone verification
    */
-  async verifyEmail(token: string): Promise<{ redirectUrl: string }> {
+  async verifyEmail(token: string): Promise<{ redirectUrl: string; userId: string }> {
     // Verify the token
     const verification = await this.emailVerificationService.verifyToken(token);
 
@@ -134,6 +134,7 @@ export class AuthService {
 
     return {
       redirectUrl: '/register/phone-setup',
+      userId: verification.userId,
     };
   }
 
@@ -197,6 +198,15 @@ export class AuthService {
       throw new NotFoundException({
         code: ErrorCode.USER_NOT_FOUND,
         message: 'User not found',
+        details: { userId },
+      });
+    }
+
+    // Security: Verify email is verified before allowing phone setup
+    if (!user.emailVerified) {
+      throw new BadRequestException({
+        code: ErrorCode.EMAIL_NOT_VERIFIED,
+        message: 'Email must be verified before setting up phone verification',
         details: { userId },
       });
     }

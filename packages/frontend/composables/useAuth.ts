@@ -7,6 +7,15 @@ interface RegistrationResponse {
 
 interface EmailVerificationResponse {
   redirectUrl: string;
+  userId: string;
+}
+
+interface SendSmsCodeResponse {
+  message: string;
+}
+
+interface VerifyPhoneResponse {
+  message: string;
 }
 
 export function useAuth() {
@@ -134,11 +143,100 @@ export function useAuth() {
     }
   }
 
+  /**
+   * Send SMS verification code to phone number
+   */
+  async function sendSmsCode(
+    userId: string,
+    phoneNumber: string,
+  ): Promise<{ success: boolean; message?: string; error?: string }> {
+    isLoading.value = true;
+    error.value = null;
+
+    try {
+      const response = await $fetch<SendSmsCodeResponse>(
+        `${apiBaseUrl}/auth/send-sms-code`,
+        {
+          method: 'POST',
+          body: {
+            userId,
+            phone: phoneNumber,
+          },
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+
+      return {
+        success: true,
+        message: response.message,
+      };
+    } catch (err: unknown) {
+      const apiError = err as { data?: ApiError };
+      const errorMessage =
+        apiError.data?.error?.message || 'Failed to send SMS code. Please try again.';
+      error.value = errorMessage;
+
+      return {
+        success: false,
+        error: errorMessage,
+      };
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  /**
+   * Verify phone number with SMS code
+   */
+  async function verifyPhone(
+    userId: string,
+    phoneNumber: string,
+    code: string,
+  ): Promise<{ success: boolean; message?: string; error?: string }> {
+    isLoading.value = true;
+    error.value = null;
+
+    try {
+      const response = await $fetch<VerifyPhoneResponse>(`${apiBaseUrl}/auth/verify-phone`, {
+        method: 'POST',
+        body: {
+          userId,
+          phone: phoneNumber,
+          code,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      return {
+        success: true,
+        message: response.message,
+      };
+    } catch (err: unknown) {
+      const apiError = err as { data?: ApiError };
+      const errorMessage =
+        apiError.data?.error?.message || 'Phone verification failed. Please try again.';
+      error.value = errorMessage;
+
+      return {
+        success: false,
+        error: errorMessage,
+      };
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   return {
     isLoading,
     error,
     register,
     verifyEmail,
     resendVerification,
+    sendSmsCode,
+    verifyPhone,
   };
 }

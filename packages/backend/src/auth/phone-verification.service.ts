@@ -2,7 +2,7 @@ import { Injectable, Logger, Inject } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { createHash } from 'crypto';
+import { createHash, randomInt } from 'crypto';
 import { PhoneVerification } from './entities/phone-verification.entity';
 
 @Injectable()
@@ -17,11 +17,13 @@ export class PhoneVerificationService {
   ) {}
 
   /**
-   * Generate a secure random 6-digit numeric SMS code
+   * Generate a cryptographically secure random 6-digit numeric SMS code
+   * Uses crypto.randomInt() for secure random generation
    * @returns 6-digit numeric string (e.g., "123456")
    */
   generateSmsCode(): string {
-    const code = Math.floor(100000 + Math.random() * 900000);
+    // Generate secure random number between 100000 and 999999 (inclusive)
+    const code = randomInt(100000, 1000000);
     return code.toString();
   }
 
@@ -39,14 +41,14 @@ export class PhoneVerificationService {
    * Code expires in 10 minutes
    * @param userId - User ID requesting verification
    * @param phone - Phone number in E.164 format (e.g., "+33612345678")
-   * @returns PhoneVerification entity
+   * @returns Object with verification entity and plain code for SMS sending
    */
   async createVerificationCode(
     userId: string,
     phone: string,
-  ): Promise<PhoneVerification> {
-    const code = this.generateSmsCode();
-    const hashedCode = this.hashCode(code);
+  ): Promise<PhoneVerification & { code: string }> {
+    const plainCode = this.generateSmsCode();
+    const hashedCode = this.hashCode(plainCode);
     const expiresAt = new Date();
     expiresAt.setMinutes(expiresAt.getMinutes() + 10); // 10 minutes expiry
 
@@ -59,9 +61,9 @@ export class PhoneVerificationService {
 
     const savedVerification = await this.phoneVerificationRepository.save(verification);
 
-    // Store the plain code temporarily so it can be sent via SMS
-    // We return the saved verification but with the plain code for SMS sending
-    return { ...savedVerification, code };
+    // Return saved verification with plain code for SMS sending
+    // IMPORTANT: code property contains PLAIN TEXT code, not the hashed version stored in DB
+    return Object.assign(savedVerification, { code: plainCode });
   }
 
   /**

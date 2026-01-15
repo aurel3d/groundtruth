@@ -101,6 +101,11 @@ export class AuthController {
           type: 'string',
           example: '/register/phone-setup',
         },
+        userId: {
+          type: 'string',
+          format: 'uuid',
+          example: '550e8400-e29b-41d4-a716-446655440000',
+        },
       },
     },
   })
@@ -127,7 +132,7 @@ export class AuthController {
   })
   async verifyEmail(
     @Query('token') token: string,
-  ): Promise<{ redirectUrl: string }> {
+  ): Promise<{ redirectUrl: string; userId: string }> {
     // Validate token with Zod
     const validated = EmailVerificationSchema.parse({ token });
     return this.authService.verifyEmail(validated.token);
@@ -275,7 +280,7 @@ export class AuthController {
     },
   })
   async sendSmsCode(
-    @Body() body: SendSmsCodeDto & { userId: string },
+    @Body() body: SendSmsCodeDto,
   ): Promise<{ message: string }> {
     return this.authService.sendSmsCode(body.userId, body.phone);
   }
@@ -320,7 +325,7 @@ export class AuthController {
     },
   })
   async verifyPhone(
-    @Body() body: VerifyPhoneDto & { userId: string },
+    @Body() body: VerifyPhoneDto,
   ): Promise<{ message: string }> {
     return this.authService.verifyPhone(body.userId, body.phone, body.code);
   }

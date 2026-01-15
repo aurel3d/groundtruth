@@ -234,7 +234,10 @@ onMounted(async () => {
 
         if (progress >= 100) {
           clearInterval(interval);
-          router.push(result.redirectUrl || '/register/phone-setup');
+          // Pass userId to phone setup page
+          const redirectUrl = result.redirectUrl || '/register/phone-setup';
+          const urlWithUserId = `${redirectUrl}?userId=${result.userId}`;
+          router.push(urlWithUserId);
         }
       }, 400); // 5 steps of 400ms = 2 seconds
     } else {

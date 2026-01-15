@@ -15,4 +15,7 @@ export default defineConfig({
       '@groundtruth/shared': resolve(__dirname, '../../shared/src/index.ts'),
     },
   },
+  ssr: {
+    noExternal: ['supertest'],
+  },
 })

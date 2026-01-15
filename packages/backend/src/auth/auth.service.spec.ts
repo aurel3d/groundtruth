@@ -232,7 +232,10 @@ describe('AuthService', () => {
 
       const result = await service.verifyEmail(token);
 
-      expect(result).toEqual({ redirectUrl: '/register/phone-setup' });
+      expect(result).toEqual({
+        redirectUrl: '/register/phone-setup',
+        userId: mockVerification.userId,
+      });
       expect(mockEmailVerificationService.verifyToken).toHaveBeenCalledWith(token);
       expect(mockUsersRepository.update).toHaveBeenCalledWith(mockVerification.userId, {
         emailVerified: true,
