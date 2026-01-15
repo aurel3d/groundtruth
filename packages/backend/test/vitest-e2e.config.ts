@@ -8,7 +8,7 @@ export default defineConfig({
     include: ['**/*.e2e-spec.ts'],
     environment: 'node',
     globals: true,
-    setupFiles: ['../src/test-setup.ts'],
+    setupFiles: [resolve(__dirname, '../src/test-setup.ts')],
   },
   resolve: {
     alias: {

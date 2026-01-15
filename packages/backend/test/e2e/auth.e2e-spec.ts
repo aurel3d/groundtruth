@@ -5,6 +5,8 @@ import { AppModule } from '../../src/app.module';
 import { DataSource } from 'typeorm';
 import { User } from '../../src/users/entities/user.entity';
 import { EmailVerification } from '../../src/auth/entities/email-verification.entity';
+import { HttpExceptionFilter } from '../../src/common/filters/http-exception.filter';
+import { RequestIdInterceptor } from '../../src/common/interceptors/request-id.interceptor';
 
 describe('Auth (e2e)', () => {
   let app: INestApplication;
@@ -26,19 +28,58 @@ describe('Auth (e2e)', () => {
       }),
     );
 
+    // Apply global interceptors (same as in main.ts)
+    app.useGlobalInterceptors(new RequestIdInterceptor());
+
+    // Apply global filters (same as in main.ts)
+    app.useGlobalFilters(new HttpExceptionFilter());
+
     await app.init();
 
     dataSource = app.get(DataSource);
   });
 
   afterAll(async () => {
-    await app.close();
+    await app?.close();
   });
 
   beforeEach(async () => {
     // Clean up database before each test
     await dataSource.getRepository(EmailVerification).delete({});
     await dataSource.getRepository(User).delete({});
+  });
+
+  describe('Global filters and interceptors', () => {
+    it('should include request ID in error responses', () => {
+      return request(app.getHttpServer())
+        .post('/api/v1/auth/register')
+        .send({
+          email: 'invalid-email',
+          password: 'SecurePassword123!',
+        })
+        .expect(400)
+        .expect((res) => {
+          expect(res.body.error).toHaveProperty('requestId');
+          expect(res.body.error.requestId).toMatch(/^[0-9a-f-]{36}$/);
+        });
+    });
+
+    it('should return standardized error format', () => {
+      return request(app.getHttpServer())
+        .post('/api/v1/auth/register')
+        .send({
+          email: 'invalid-email',
+          password: 'SecurePassword123!',
+        })
+        .expect(400)
+        .expect((res) => {
+          expect(res.body).toHaveProperty('error');
+          expect(res.body.error).toHaveProperty('code');
+          expect(res.body.error).toHaveProperty('message');
+          expect(res.body.error).toHaveProperty('timestamp');
+          expect(res.body.error).toHaveProperty('requestId');
+        });
+    });
   });
 
   describe('POST /api/v1/auth/register', () => {

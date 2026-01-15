@@ -1,7 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { ThrottlerGuard } from '@nestjs/throttler';
 import { AppModule } from './app.module';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import { RequestIdInterceptor } from './common/interceptors/request-id.interceptor';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
@@ -23,6 +26,15 @@ async function bootstrap(): Promise<void> {
       transform: true,
     }),
   );
+
+  // Global interceptors
+  app.useGlobalInterceptors(new RequestIdInterceptor());
+
+  // Global exception filters
+  app.useGlobalFilters(new HttpExceptionFilter());
+
+  // Global guards (rate limiting)
+  app.useGlobalGuards(app.get(ThrottlerGuard));
 
   // Swagger documentation
   const config = new DocumentBuilder()

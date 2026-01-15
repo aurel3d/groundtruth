@@ -94,10 +94,51 @@ export function useAuth() {
     }
   }
 
+  /**
+   * Resend verification email to user
+   */
+  async function resendVerification(
+    email: string,
+  ): Promise<{ success: boolean; message?: string; error?: string }> {
+    isLoading.value = true;
+    error.value = null;
+
+    try {
+      const response = await $fetch<RegistrationResponse>(
+        `${apiBaseUrl}/auth/resend-verification`,
+        {
+          method: 'POST',
+          body: { email },
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+
+      return {
+        success: true,
+        message: response.message,
+      };
+    } catch (err: unknown) {
+      const apiError = err as { data?: ApiError };
+      const errorMessage =
+        apiError.data?.error?.message || 'Failed to resend verification email. Please try again.';
+      error.value = errorMessage;
+
+      return {
+        success: false,
+        error: errorMessage,
+      };
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   return {
     isLoading,
     error,
     register,
     verifyEmail,
+    resendVerification,
   };
 }

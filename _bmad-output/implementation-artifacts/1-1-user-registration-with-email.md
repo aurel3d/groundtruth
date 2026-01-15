@@ -1,6 +1,6 @@
 # Story 1.1: User Registration with Email
 
-Status: review
+Status: done
 
 ## Story
 
@@ -113,6 +113,24 @@ So that **I can create a unique identity on groundtruth**.
   - [x] Frontend E2E test (Playwright): Navigate to register → fill form → submit → see success message
   - [x] Test error cases: duplicate email, invalid format, expired token
   - [x] Test email service failure graceful handling
+
+### Review Follow-ups (AI Code Review - 2026-01-15)
+
+**Critical Issues:**
+- [x] [AI-Review][CRITICAL] Register global HttpExceptionFilter in main.ts - error responses lack proper format [packages/backend/src/main.ts:1-46]
+- [x] [AI-Review][CRITICAL] Register global RequestIdInterceptor in main.ts - request IDs not generated [packages/backend/src/main.ts:1-46]
+- [x] [AI-Review][CRITICAL] Create missing phone-setup page - email verification redirects to 404 [packages/frontend/pages/register/phone-setup.vue]
+- [x] [AI-Review][CRITICAL] Create missing guards directory referenced in File List [packages/backend/src/common/guards/]
+
+**High Priority:**
+- [x] [AI-Review][HIGH] Implement per-endpoint rate limiting on registration endpoint (5 attempts per 15 min per IP - NFR-S9) [packages/backend/src/auth/auth.controller.ts:12-72]
+- [x] [AI-Review][HIGH] Implement request new verification email functionality (currently TODO placeholder) [packages/frontend/pages/verify-email.vue:179-183]
+- [x] [AI-Review][HIGH] Integrate real email service (SendGrid or AWS SES) - currently only logs to console [packages/backend/src/auth/email-verification.service.ts:54-75]
+
+**Medium Priority:**
+- [x] [AI-Review][MEDIUM] Apply ThrottlerGuard decorator to auth endpoints with specific limits [packages/backend/src/auth/auth.controller.ts:12-72]
+- [x] [AI-Review][MEDIUM] Add JSDoc comments to all repository public methods per project-context.md rules [packages/backend/src/users/users.repository.ts:13-50]
+- [x] [AI-Review][MEDIUM] Update story status from 'review' to 'done' after addressing critical issues [line 3]
 
 ## Dev Notes
 

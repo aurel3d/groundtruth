@@ -2,6 +2,7 @@ import {
   Injectable,
   ConflictException,
   BadRequestException,
+  NotFoundException,
   Logger,
   Inject,
 } from '@nestjs/common';
@@ -130,6 +131,50 @@ export class AuthService {
 
     return {
       redirectUrl: '/register/phone-setup',
+    };
+  }
+
+  /**
+   * Resend verification email
+   * - Finds user by email
+   * - Checks if email is already verified
+   * - Generates new verification token
+   * - Sends new verification email
+   */
+  async resendVerificationEmail(email: string): Promise<{ message: string }> {
+    // Find user by email
+    const user = await this.usersRepository.findByEmail(email);
+
+    if (!user) {
+      throw new NotFoundException({
+        code: ErrorCode.USER_NOT_FOUND,
+        message: 'No account found with this email',
+        details: { email },
+      });
+    }
+
+    // Check if email is already verified
+    if (user.emailVerified) {
+      throw new BadRequestException({
+        code: ErrorCode.EMAIL_ALREADY_VERIFIED,
+        message: 'Email is already verified',
+        details: { email },
+      });
+    }
+
+    // Generate new verification token
+    const verification =
+      await this.emailVerificationService.createVerificationToken(user.id);
+
+    // Send verification email (async, don't block response)
+    this.emailVerificationService
+      .sendVerificationEmail(email, verification.token)
+      .catch((error: Error) => {
+        this.logger.error(`Failed to send verification email: ${error.message}`);
+      });
+
+    return {
+      message: 'Verification email sent. Check your inbox.',
     };
   }
 }
