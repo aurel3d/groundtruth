@@ -5,6 +5,9 @@ import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { User } from './users/entities/user.entity';
+import { EmailVerification } from './auth/entities/email-verification.entity';
+import { PhoneVerification } from './auth/entities/phone-verification.entity';
 
 @Module({
   imports: [
@@ -24,7 +27,7 @@ import { AuthModule } from './auth/auth.module';
         username: configService.get<string>('DB_USERNAME', 'postgres'),
         password: configService.get<string>('DB_PASSWORD', 'postgres'),
         database: configService.get<string>('DB_DATABASE', 'groundtruth'),
-        entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        entities: [User, EmailVerification, PhoneVerification],
         synchronize: false, // Always use migrations in production
         logging: configService.get<string>('NODE_ENV') === 'development',
         migrations: [__dirname + '/migrations/*{.ts,.js}'],
